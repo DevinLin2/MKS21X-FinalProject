@@ -4,6 +4,14 @@ private int damage;
 private int x;
 private int y;
 
+public Monster(int h, int d, int xcord, int ycord){
+  health = h;
+  damage = d;
+  x = xcord;
+  y = ycord;
+
+}
+
 public void attack(){
 
 }
