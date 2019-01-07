@@ -12,15 +12,26 @@ public Monster(int h, int d, int xcord, int ycord){
 
 }
 
-public void attack(){
-
+public int attack(){
+return damage;
 }
 public void takeDamage(int damage){ // might make it return int
 health = health - damage;
 }
 
-public void move(){
-
+public void move(String direction){
+  if (direction.equals("up")){
+    y++
+  }
+  if (direction.equals("down")){
+    y--
+  }
+  if (direction.equals("left")){
+    x--
+  }
+  if (direction.equals("right")){
+    x++
+  }
 }
 
 public int getDamage(){
