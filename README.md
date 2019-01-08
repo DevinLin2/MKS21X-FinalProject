@@ -8,4 +8,7 @@
   -Finished more methods inside of Monster class
   -Open the terminal in priavte mode, and created a symbol.
   -Wrote code to exit the terminal with the escape key 
+1/8/19
+  - Gave player and monster a symbol
+  - Created terminal, added code for player movement.
   
