@@ -24,16 +24,16 @@ health = health - damage;
 
 public void move(String direction){
   if (direction.equals("up")){
-    y++;
-  }
-  if (direction.equals("down")){
     y--;
   }
+  if (direction.equals("down")){
+    y++;
+  }
   if (direction.equals("left")){
-    x--;
+    x++;
   }
   if (direction.equals("right")){
-    x++;
+    x--;
   }
 }
 
