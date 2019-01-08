@@ -17,15 +17,23 @@ public class Field{
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
     boolean running = true;
+    Player bob = new Player(100, 10, 10, 2);
     while (running){
-      terminal.moveCursor(0,0);
-      terminal.putCharacter('\u262d');
+      terminal.moveCursor(bob.getX(),bob.getY());
+      terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
-
+      terminal.setCursorVisible(false);
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
           running = false;
+        }
+        if (key.getKind() == Key.Kind.ArrowUp){
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.move("up");
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(bob.getCharacter());
         }
       }
     }
