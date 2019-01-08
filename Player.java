@@ -19,10 +19,10 @@ public class Player{
       yCoord++;
     }
     if (direction.equals("left")){
-      xCoord++;
+      xCoord--;
     }
     if (direction.equals("right")){
-      xCoord--;
+      xCoord++;
     }
   }
   public char getCharacter(){
