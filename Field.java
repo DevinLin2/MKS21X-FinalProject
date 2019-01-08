@@ -35,6 +35,27 @@ public class Field{
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
+        if (key.getKind() == Key.Kind.ArrowDown){
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.move("down");
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(bob.getCharacter());
+        }
+        if (key.getKind() == Key.Kind.ArrowLeft){
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.move("left");
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(bob.getCharacter());
+        }
+        if (key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.move("right");
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(bob.getCharacter());
+        }
       }
     }
   }
