@@ -11,4 +11,7 @@
 1/8/19
   - Gave player and monster a symbol
   - Created terminal, added code for player movement.
-  
+1/9/19 
+  - Merged monster branch into master
+  - Read java doc on how to use screen 
+  - Created a screen 
