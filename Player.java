@@ -8,7 +8,7 @@ public class Player{
     health = h;
     xCoord = x;
     yCoord = y;
-    logo = '\u0b87';
+    logo = '\u0040';
     damage = d;
   }
   public void move(String direction){
@@ -33,5 +33,8 @@ public class Player{
   }
   public int getY(){
     return yCoord;
+  }
+  public int getHealth(){
+    return health;
   }
 }
