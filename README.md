@@ -15,3 +15,7 @@
   - Merged monster branch into master
   - Read java doc on how to use screen 
   - Created a screen 
+1/10/19
+  - fixed merge problem 
+  - created monster in the screen.
+  - filled in wall class and a bit of floor class 
