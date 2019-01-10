@@ -16,17 +16,23 @@ import com.googlecode.lanterna.screen.Screen;
 public class Field{
   public static void main(String[] args) {
     Player bob = new Player(100, 10, 10, 2);
+    Monster jack = new Monster(200,40,12,1);
     Terminal terminal = TerminalFacade.createTextTerminal();
     Screen screen = new Screen(terminal);
     screen.startScreen();
+    int rows = terminal.getTerminalSize().getRows(); //24 rows
+    int columns = terminal.getTerminalSize().getColumns();//80 columns
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.WHITE,Terminal.Color.RED);
     screen.refresh();
     boolean running = true;
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
+      terminal.moveCursor(jack.getX(),jack.getY());
+      terminal.putCharacter(jack.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
+
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           screen.stopScreen();

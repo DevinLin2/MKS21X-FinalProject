@@ -4,13 +4,19 @@ private int damage;
 private int x;
 private int y;
 private char logo;
-logo = '\u2639';
 
 public Monster(int h,int xcord, int ycord, int d){
   health = h;
   damage = d;
   x = xcord;
   y = ycord;
+  logo = '\u2639';
+}
+public int getX(){
+  return x;
+}
+public int getY(){
+  return y;
 }
 public char getCharacter(){
   return logo;
