@@ -20,7 +20,12 @@ public class Field{
     floor = new ArrayList<Floor>();
     Floor levelOne = new Floor(1);
     levelOne.addWall(0,0);
-    levelOne.addWall(10,10);
+    levelOne.addWall(1,0);
+    levelOne.addWall(2,0);
+    levelOne.addWall(3,0);
+    levelOne.addWall(4,0);
+    levelOne.addWall(5,0);
+    levelOne.addWall(6,0);
     floor.add(levelOne);
   }
   public static void main(String[] args) {
