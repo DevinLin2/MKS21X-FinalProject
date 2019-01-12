@@ -26,6 +26,14 @@ public class Field{
     levelOne.addWall(4,0);
     levelOne.addWall(5,0);
     levelOne.addWall(6,0);
+    levelOne.addWall(20,20);
+    levelOne.addWall(20,21);
+    levelOne.addWall(20,22);
+    levelOne.addWall(20,23);
+    levelOne.addWall(20,24);
+    levelOne.addWall(20,25);
+    levelOne.addWall(20,26);
+    levelOne.addWall(20,27);
     floor.add(levelOne);
   }
   public static void main(String[] args) {
