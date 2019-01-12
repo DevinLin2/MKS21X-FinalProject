@@ -31,4 +31,10 @@ public class Floor{
   public ArrayList<Wall> getBorder(){
     return border;
   }
+  /**
+   * Getter method for level
+   */
+  public int getLevel(){
+    return level;
+  }
 }
