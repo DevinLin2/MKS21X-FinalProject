@@ -15,7 +15,14 @@ import com.googlecode.lanterna.screen.Screen;
 import java.util.ArrayList;
 
 public class Field{
+  /**
+   * ArrayList of different floors each a different level
+   */
   private ArrayList<Floor> floor;
+  /**
+   * Constructs a Field which initiates the Arraylist of floors.
+   * The floors will each hold an unique ArrayList of walls.
+   */
   public Field(){
     floor = new ArrayList<Floor>();
     Floor levelOne = new Floor(1);
