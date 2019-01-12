@@ -22,27 +22,27 @@ public class Wall{
     logo = '\u25fb';
   }
   /**
-   * setter method to change xCoord
+   * Setter method to change xCoord
    * @param x new x value to replace xCoord
    */
   public void setX(int x){
     xCoord = x;
   }
   /**
-   * setter method to change yCoord
+   * Setter method to change yCoord
    * @param y new y value to replace yCoord
    */
   public void setY(int y){
     yCoord = y;
   }
   /**
-   * getter method to get xCoord
+   * Getter method to get xCoord
    */
   public int getX(){
     return xCoord;
   }
   /**
-   * getter method to get yCoord
+   * Getter method to get yCoord
    */
   public int getY(){
     return yCoord;
