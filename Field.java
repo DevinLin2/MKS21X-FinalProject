@@ -15,13 +15,10 @@ import com.googlecode.lanterna.screen.Screen;
 import java.util.ArrayList;
 
 public class Field{
-  /**
-   * ArrayList of Floors
-   */
   private ArrayList<Floor> floor;
-  public void makeFloor(){
-    Floor levelOne = new Floor(1);
+  public Field(){
     floor = new ArrayList<Floor>();
+    Floor levelOne = new Floor(1);
     levelOne.addWall(0,0);
     levelOne.addWall(10,10);
     floor.add(levelOne);
@@ -30,13 +27,14 @@ public class Field{
     Player bob = new Player(100, 10, 10, 2);
     Terminal terminal = TerminalFacade.createTextTerminal();
     Screen screen = new Screen(terminal);
+    Field playingField = new Field();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.WHITE,Terminal.Color.RED);
-    for (int floorLevel = 0; floorLevel < floor.size(); floorLevel++){
-      Floor current = floor.get(i);
-      for (int currentWall = 0; currentWall < current.size(); currentWall++){
-        terminal.moveCursor(current.get(currentWall).getX(),current.get(currentWall).getY());
-        terminal.putCharacter(current.get(currentWall).getLogo());
+    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){
+      Floor current = playingField.floor.get(floorLevel);
+      for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
+        terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
+        terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
     screen.refresh();
