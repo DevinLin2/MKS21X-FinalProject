@@ -20,6 +20,7 @@ public class Field{
     Screen screen = new Screen(terminal);
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.WHITE,Terminal.Color.RED);
+    screen.putString(2,3,"Health: " + bob.getHealth(), Terminal.Color.WHITE,Terminal.Color.RED);
     screen.refresh();
     boolean running = true;
     while (running){
