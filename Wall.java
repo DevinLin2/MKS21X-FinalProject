@@ -47,4 +47,10 @@ public class Wall{
   public int getY(){
     return yCoord;
   }
+  /**
+   * Getter method for logo
+   */
+  public char getLogo(){
+    return logo;
+  }
 }
