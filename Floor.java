@@ -25,4 +25,10 @@ public class Floor{
     Wall toAdd = new Wall(x,y);
     border.add(toAdd);
   }
+  /**
+   * Getter method for the ArrayList of walls
+   */
+  public ArrayList<Wall> getBorder(){
+    return border;
+  }
 }
