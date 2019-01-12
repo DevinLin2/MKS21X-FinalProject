@@ -5,7 +5,7 @@ public class Wall{
   public Wall(int x, int y){
     xCoord = x;
     yCoord = y;
-    logo = "\u25fb";
+    logo = '\u25fb';
   }
   public void setX(int x){
     xCoord = x;
