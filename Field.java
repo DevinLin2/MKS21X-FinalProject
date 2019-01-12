@@ -12,6 +12,7 @@ import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.Screen;
+import java.util.ArrayList;
 
 public class Field{
   public static void main(String[] args) {
