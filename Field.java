@@ -12,14 +12,51 @@ import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.Screen;
+import java.util.ArrayList;
 
 public class Field{
+  /**
+   * ArrayList of different floors each a different level
+   */
+  private ArrayList<Floor> floor;
+  /**
+   * Constructs a Field which initiates the Arraylist of floors.
+   * The floors will each hold an unique ArrayList of walls.
+   */
+  public Field(){
+    floor = new ArrayList<Floor>();
+    Floor levelOne = new Floor(1);
+    levelOne.addWall(0,0);
+    levelOne.addWall(1,0);
+    levelOne.addWall(2,0);
+    levelOne.addWall(3,0);
+    levelOne.addWall(4,0);
+    levelOne.addWall(5,0);
+    levelOne.addWall(6,0);
+    levelOne.addWall(20,20);
+    levelOne.addWall(20,21);
+    levelOne.addWall(20,22);
+    levelOne.addWall(20,23);
+    levelOne.addWall(20,24);
+    levelOne.addWall(20,25);
+    levelOne.addWall(20,26);
+    levelOne.addWall(20,27);
+    floor.add(levelOne);
+  }
   public static void main(String[] args) {
     Player bob = new Player(100, 10, 10, 2);
     Terminal terminal = TerminalFacade.createTextTerminal();
     Screen screen = new Screen(terminal);
+    Field playingField = new Field();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.WHITE,Terminal.Color.RED);
+    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){
+      Floor current = playingField.floor.get(floorLevel);
+      for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
+        terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
+        terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
+      }
+    }
     screen.refresh();
     boolean running = true;
     while (running){
