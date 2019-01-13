@@ -107,18 +107,9 @@ public class Field{
     levelOne.addWall(20,22);
     levelOne.addWall(20,23);
     levelOne.addWall(20,24);
-<<<<<<< HEAD
     levelOne.addWall(20,25);
     levelOne.addWall(20,26);
     levelOne.addWall(20,27);
-    currentFloor = levelOne;
-    floor.add(levelOne);
-  }
-  public static void main(String[] args) {
-    Player bob = new Player(100, 1, 1, 2);
-=======
-
-    levelOne.addWall(20,24);
     levelOne.addWall(21,24);
     levelOne.addWall(22,24);
     levelOne.addWall(23,24);
@@ -433,11 +424,10 @@ public class Field{
     levelOne.addWall(73,21);
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
-
+    currentFloor = levelOne;
     floor.add(levelOne);
   }
   public static void main(String[] args) {
->>>>>>> 2a3a7833c6f2669ea6db721e205422848769abfc
     Terminal terminal = TerminalFacade.createTextTerminal();
     boolean running = true;
     Player bob = new Player(100, 10, 10, 2);
@@ -463,11 +453,7 @@ public class Field{
           terminal.exitPrivateMode();
           running = false;
         }
-<<<<<<< HEAD
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
-=======
-        if (key.getKind() == Key.Kind.ArrowUp){ // also check if player will be in boundary of walls.
->>>>>>> 2a3a7833c6f2669ea6db721e205422848769abfc
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
