@@ -107,9 +107,6 @@ public class Field{
     levelOne.addWall(20,22);
     levelOne.addWall(20,23);
     levelOne.addWall(20,24);
-    levelOne.addWall(20,25);
-    levelOne.addWall(20,26);
-    levelOne.addWall(20,27);
     levelOne.addWall(21,24);
     levelOne.addWall(22,24);
     levelOne.addWall(23,24);
