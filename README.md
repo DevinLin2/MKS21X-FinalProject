@@ -23,3 +23,7 @@
   - finished basis of floor class 
   - program is now able to put in walls when given x and y coordinates
   - we are now using a 2D arraylist for the playing field to represent multiple floors and the walls in each floor
+1/13/19
+  - Created floor one
+  - Made it impossible for a player to pass through walls
+  
