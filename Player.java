@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Player{
   /**
    * Health of Player
@@ -75,4 +76,17 @@ public class Player{
   public int getHealth(){
     return health;
   }
+  // /**
+  //  * Checks if a wall is present one tile in the direction the player is attempting to move in
+  //  * @param direction the direction in which Player is attempting to move in
+  //  * @param floors All the floors currently in Field
+  //  * @param currentFloor the current floor the Player is on
+  //  * @return true if such wall exists false otherwise.
+  //  */
+  // public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
+  //   Floor
+  //   if (direction.equals("up")){
+  //
+  //   }
+  // }
 }
