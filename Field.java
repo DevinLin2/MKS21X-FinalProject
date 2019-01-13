@@ -20,17 +20,12 @@ public class Field{
    */
   private ArrayList<Floor> floor;
   /**
-   * Current floor Player is on
-   */
-  private Floor currentFloor;
-  /**
    * Constructs a Field which initiates the Arraylist of floors.
    * The floors will each hold an unique ArrayList of walls.
    */
   public Field(){
     floor = new ArrayList<Floor>();
     Floor levelOne = new Floor(1);
-    currentFloor = levelOne;
     levelOne.addWall(0,0);
     levelOne.addWall(1,0);
     levelOne.addWall(2,0);
@@ -56,10 +51,10 @@ public class Field{
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){
-      //Floor current = playingField.floor.get(floorLevel);
-      for (int currentWall = 0; currentWall < currentFloor.getBorder().size(); currentWall++){
-        terminal.moveCursor(currentFloor.getBorder().get(currentWall).getX(),currentFloor.getBorder().get(currentWall).getY());
-        terminal.putCharacter(currentFloor.getBorder().get(currentWall).getLogo());
+      Floor current = playingField.floor.get(floorLevel);
+      for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
+        terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
+        terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
     screen.refresh();
@@ -74,7 +69,7 @@ public class Field{
           screen.stopScreen();
           running = false;
         }
-        if (key.getKind() == Key.Kind.ArrowUp){ // also check if player will be in boundary of walls.
+        if (key.getKind() == Key.Kind.ArrowUp){ // also check if player will be in boundary of Walls
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
