@@ -93,6 +93,27 @@ public class Player{
         }
       }
     }
+    if (direction.equals("down")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord == current.getBorder().get(wall).getX()) && (this.yCoord + 1 == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("left")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord - 1 == current.getBorder().get(wall).getX()) && (this.yCoord == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("right")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord + 1 == current.getBorder().get(wall).getX()) && (this.yCoord == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
     return true;
   }
 }

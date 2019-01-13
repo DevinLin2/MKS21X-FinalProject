@@ -56,7 +56,7 @@ public class Field{
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
-      Floor current = playingField.floor.get(floorLevel);
+      Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
       for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
@@ -81,21 +81,21 @@ public class Field{
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowDown){
+        if (bob.validMove("down", playingField.floor, playingField.currentFloor) && key.getKind() == Key.Kind.ArrowDown){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("down");
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowLeft){
+        if (bob.validMove("left", playingField.floor, playingField.currentFloor) && key.getKind() == Key.Kind.ArrowLeft){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("left");
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowRight){
+        if (bob.validMove("right", playingField.floor, playingField.currentFloor) && key.getKind() == Key.Kind.ArrowRight){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("right");
