@@ -421,6 +421,9 @@ public class Field{
     levelOne.addWall(73,21);
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
+    levelOne.addMonster(10,30,4,5);
+    levelOne.addMonster(10,50,15,5);
+    levelOne.addMonster(10,29,20,5);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -432,11 +435,17 @@ public class Field{
     Field playingField = new Field();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    // will break with multiple floors
+    // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
       Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
       for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
+      }
+      for (int currentMonster = 0; currentMonster < current.getEnemies().size(); currentMonster++){
+        terminal.moveCursor(current.getEnemies().get(currentMonster).getX(), current.getEnemies().get(currentMonster).getY());
+        terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
       }
     }
     screen.refresh();
