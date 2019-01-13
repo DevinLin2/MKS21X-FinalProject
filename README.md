@@ -15,3 +15,11 @@
   - Merged monster branch into master
   - Read java doc on how to use screen 
   - Created a screen 
+1/10/19
+  - fixed merge problem 
+  - created monster in the screen.
+  - filled in wall class and a bit of floor class 
+1/12/19
+  - finished basis of floor class 
+  - program is now able to put in walls when given x and y coordinates
+  - we are now using a 2D arraylist for the playing field to represent multiple floors and the walls in each floor
