@@ -1,5 +1,5 @@
 # MKS21X-FinalProject
-TO COMPLIE:
+TO COMPILE:
 javac -cp lanterna.jar:. Field.java
 
 TO RUN:
