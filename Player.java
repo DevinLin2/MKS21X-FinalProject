@@ -84,7 +84,8 @@ public class Player{
    * @return true if such wall exists false otherwise.
    */
   public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
-    Floor current = floors.get(currentFloor);
+    int index = floors.indexOf(currentFloor);
+    Floor current = floors.get(index);
     if (direction.equals("up")){
       for (int wall = 0; wall < current.getBorder().size(); wall++){
         if ((this.xCoord == current.getBorder().get(wall).getX()) && (this.yCoord - 1 == current.getBorder().get(wall).getY())){

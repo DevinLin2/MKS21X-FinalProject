@@ -20,6 +20,10 @@ public class Field{
    */
   private ArrayList<Floor> floor;
   /**
+   * current floor of player
+   */
+  private Floor currentFloor;
+  /**
    * Constructs a Field which initiates the Arraylist of floors.
    * The floors will each hold an unique ArrayList of walls.
    */
@@ -41,6 +45,7 @@ public class Field{
     levelOne.addWall(20,25);
     levelOne.addWall(20,26);
     levelOne.addWall(20,27);
+    currentFloor = levelOne;
     floor.add(levelOne);
   }
   public static void main(String[] args) {
@@ -69,7 +74,7 @@ public class Field{
           screen.stopScreen();
           running = false;
         }
-        if (bob.validMove("up", floor, levelOne) && (key.getKind() == Key.Kind.ArrowUp)){ // also check if player will be in boundary of Walls
+        if (bob.validMove("up", this.floor, currentFloor) && (key.getKind() == Key.Kind.ArrowUp)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
