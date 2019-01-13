@@ -76,17 +76,44 @@ public class Player{
   public int getHealth(){
     return health;
   }
-  // /**
-  //  * Checks if a wall is present one tile in the direction the player is attempting to move in
-  //  * @param direction the direction in which Player is attempting to move in
-  //  * @param floors All the floors currently in Field
-  //  * @param currentFloor the current floor the Player is on
-  //  * @return true if such wall exists false otherwise.
-  //  */
-  // public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
-  //   Floor
-  //   if (direction.equals("up")){
-  //
-  //   }
-  // }
+  /**
+   * Checks if a wall is present one tile in the direction the player is attempting to move in
+   * @param direction the direction in which Player is attempting to move in
+   * @param floors All the floors currently in Field
+   * @param currentFloor the current floor the Player is on
+   * @return true if such wall exists false otherwise.
+   */
+  public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
+    int index = floors.indexOf(currentFloor);
+    Floor current = floors.get(index);
+    if (direction.equals("up")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord == current.getBorder().get(wall).getX()) && (this.yCoord - 1 == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("down")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord == current.getBorder().get(wall).getX()) && (this.yCoord + 1 == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("left")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord - 1 == current.getBorder().get(wall).getX()) && (this.yCoord == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("right")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.xCoord + 1 == current.getBorder().get(wall).getX()) && (this.yCoord == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

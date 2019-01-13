@@ -20,6 +20,10 @@ public class Field{
    */
   private ArrayList<Floor> floor;
   /**
+   * current floor of player
+   */
+  private Floor currentFloor;
+  /**
    * Constructs a Field which initiates the Arraylist of floors.
    * The floors will each hold an unique ArrayList of walls.
    */
@@ -41,17 +45,18 @@ public class Field{
     levelOne.addWall(20,25);
     levelOne.addWall(20,26);
     levelOne.addWall(20,27);
+    currentFloor = levelOne;
     floor.add(levelOne);
   }
   public static void main(String[] args) {
-    Player bob = new Player(100, 10, 10, 2);
+    Player bob = new Player(100, 1, 1, 2);
     Terminal terminal = TerminalFacade.createTextTerminal();
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){
-      Floor current = playingField.floor.get(floorLevel);
+    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
+      Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
       for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
@@ -69,28 +74,28 @@ public class Field{
           screen.stopScreen();
           running = false;
         }
-        if (key.getKind() == Key.Kind.ArrowUp){ // also check if player will be in boundary of Walls
+        if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowDown){
+        if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("down");
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowLeft){
+        if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("left");
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        if (key.getKind() == Key.Kind.ArrowRight){
+        if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("right");
