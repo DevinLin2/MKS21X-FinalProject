@@ -9,11 +9,16 @@ public class Floor{
    */
   private int level;
   /**
+   * ArrayList of all the monsters on the floor
+   */
+  private ArrayList<Monster> enemies;
+  /**
    * Constructs and empty floor.
    * @param Level The level of the floor.
    */
   public Floor(int Level){
     border = new ArrayList<Wall>();
+    enemies = new ArrayList<Monster>();
     level = Level;
   }
   /**
@@ -26,10 +31,23 @@ public class Floor{
     border.add(toAdd);
   }
   /**
+   * Constructs a new Monster and adds it to the ArrayList of monsters.
+   */
+  public void addMonster(int health, int x, int y, int damage){
+    Monster toAdd = new Monster(health, x, y, damage);
+    enemies.add(toAdd);
+  }
+  /**
    * Getter method for the ArrayList of walls
    */
   public ArrayList<Wall> getBorder(){
     return border;
+  }
+  /**
+   * Getter method for ArrayList of monsters
+   */
+  public ArrayList<Monster> getEnemies(){
+    return enemies;
   }
   /**
    * Getter method for level
