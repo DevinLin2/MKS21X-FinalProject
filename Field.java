@@ -74,7 +74,7 @@ public class Field{
           screen.stopScreen();
           running = false;
         }
-        if (bob.validMove("up", this.floor, currentFloor) && (key.getKind() == Key.Kind.ArrowUp)){
+        if (bob.validMove("up", playingField.floor, playingField.currentFloor) && (key.getKind() == Key.Kind.ArrowUp)){
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
