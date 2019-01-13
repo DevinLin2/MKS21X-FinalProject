@@ -1,4 +1,14 @@
 # MKS21X-FinalProject
+TO COMPLIE:
+javac -cp lanterna.jar:. Field.java
+
+TO RUN:
+java -cp lanterna.jar:. Field
+
+TO USE PROGRAM: 
+Use arrow keys to move the player (@) around a map 
+
+
 1/4/19
   - Created branches monster, player, floor,
   - Created the framework inside of monster and player
