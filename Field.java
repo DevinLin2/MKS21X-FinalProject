@@ -438,6 +438,7 @@ public class Field{
     long timer = 0;
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    screen.putString(1, 4, "Time: " + timer, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
     // will break with multiple floors
     // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
