@@ -433,8 +433,7 @@ public class Field{
     Player bob = new Player(100, 10, 10, 2);
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
-    long lastTime =  System.currentTimeMillis();
-    long currentTime = lastTime;
+    long currentTime = System.currentTimeMillis();
     long timer = 0;
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -458,9 +457,8 @@ public class Field{
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
-      lastTime = currentTime;
       currentTime = System.currentTimeMillis();
-      timer += (currentTime - lastTime);
+      timer += currentTime;
       screen.putString(1, 4, "Time: " + timer, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
