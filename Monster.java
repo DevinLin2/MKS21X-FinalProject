@@ -4,7 +4,7 @@ public class Monster implements Damageable{
   private int x;
   private int y;
   private char logo;
-  private long count;
+  private int count;
   public Monster(int h,int xcord, int ycord, int d){
     health = h;
     damage = d;
@@ -35,11 +35,14 @@ public class Monster implements Damageable{
   public int getY(){
     return y;
   }
-  public long getCount(){
+  public int getCount(){
     return count;
   }
   public void addToCount(){
     count++;
+  }
+  public void resetCount(){
+    count = 0;
   }
   public void move(String direction){
     if (direction.equals("up")){

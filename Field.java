@@ -461,12 +461,13 @@ public class Field{
         int randIndex = Math.abs(randgen.nextInt(4));
         String randDirection = directionArray[randIndex];
         currentMonster.addToCount();
-        if (currentMonster.getCount() % 50000 == 0){
+        if (currentMonster.getCount() % 25000 == 0){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(randDirection);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
+          currentMonster.resetCount();
         }
       }
       if (key != null){
