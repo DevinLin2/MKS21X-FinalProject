@@ -13,6 +13,7 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.Screen;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Field{
   /**
@@ -433,6 +434,8 @@ public class Field{
     Player bob = new Player(100, 10, 10, 2);
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
+    String[] directionArray = new String[]{"up", "down", "left", "right"};
+    Random randgen = new Random();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     // puts down the walls in the terminal
@@ -455,11 +458,13 @@ public class Field{
       terminal.setCursorVisible(false);
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+        int randIndex = Math.abs(randgen.nextInt(4));
+        String randDirection = directionArray[randIndex];
         currentMonster.addToCount();
         if (currentMonster.getCount() % 10000 == 0){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
-          currentMonster.move("down");
+          currentMonster.move(randDirection);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
         }
