@@ -456,7 +456,7 @@ public class Field{
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         currentMonster.addToCount();
-        if (currentMonster.getCount() % 10 == 0){
+        if (currentMonster.getCount() % 10000 == 0){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move("down");
