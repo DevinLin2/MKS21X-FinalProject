@@ -460,11 +460,12 @@ public class Field{
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         String randDirection = directionArray[randIndex];
+        String randD = randDirection;
         currentMonster.addToCount();
-        if ((currentMonster.getCount() % 25000 == 0) && (currentMonster.validMove(randDirection, playingField.floor, playingField.currentFloor))){
+        if ((currentMonster.getCount() % 25000 == 0) && (currentMonster.validMove(randD, playingField.floor, playingField.currentFloor))){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
-          currentMonster.move(randDirection);
+          currentMonster.move(randD);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
