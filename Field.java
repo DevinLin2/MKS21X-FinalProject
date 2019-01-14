@@ -449,44 +449,52 @@ public class Field{
     }
     screen.refresh();
     while (running){
-      long currentTime = System.currentTimeMillis();
-      System.out.println(currentTime);
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
-      screen.putString(1, 4, "Time: " + currentTime, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
+      for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+        Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+        currentMonster.addToCount();
+        if (currentMonster.getCount() % 10 == 0){
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          currentMonster.move("down");
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(currentMonster.getCharacter());
+        }
+      }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
           running = false;
         }
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("down");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("left");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("right");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
       }
