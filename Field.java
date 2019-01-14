@@ -457,9 +457,10 @@ public class Field{
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
-      currentTime = System.currentTimeMillis();
       timer += currentTime;
-      screen.putString(1, 4, "Time: " + timer, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
+      if (bob.getHealth() > 0){
+        screen.putString(1, 4, "Time: " + timer, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
+      }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
