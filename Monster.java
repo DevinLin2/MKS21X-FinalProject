@@ -4,7 +4,7 @@ public class Monster implements Damageable{
   private int x;
   private int y;
   private char logo;
-  private int count;
+  private long count;
   public Monster(int h,int xcord, int ycord, int d){
     health = h;
     damage = d;
@@ -35,7 +35,7 @@ public class Monster implements Damageable{
   public int getY(){
     return y;
   }
-  public int getCount(){
+  public long getCount(){
     return count;
   }
   public void addToCount(){
