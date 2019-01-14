@@ -13,6 +13,7 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.Screen;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Field{
   /**
@@ -421,6 +422,9 @@ public class Field{
     levelOne.addWall(73,21);
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
+    levelOne.addMonster(10,30,6,5);
+    levelOne.addMonster(10,50,15,5);
+    levelOne.addMonster(10,29,20,5);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -430,13 +434,20 @@ public class Field{
     Player bob = new Player(100, 10, 10, 2);
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
+    String[] directionArray = new String[]{"up", "down", "left", "right"};
+    Random randgen = new Random();
     screen.startScreen();
     screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
       Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
       for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
+      }
+      for (int currentMonster = 0; currentMonster < current.getEnemies().size(); currentMonster++){
+        terminal.moveCursor(current.getEnemies().get(currentMonster).getX(), current.getEnemies().get(currentMonster).getY());
+        terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
       }
     }
     screen.refresh();
@@ -445,37 +456,51 @@ public class Field{
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
+      for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+        Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+        int randIndex = Math.abs(randgen.nextInt(4));
+        //String randDirection = directionArray[randIndex];
+        currentMonster.addToCount();
+        if ((currentMonster.getCount() % 250 == 0) && (currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor))){
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          currentMonster.move(directionArray[randIndex];
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(currentMonster.getCharacter());
+          currentMonster.resetCount();
+        }
+      }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
           running = false;
         }
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("up");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("down");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("left");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
         if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
           bob.move("right");
-          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
       }

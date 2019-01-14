@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Player{
+public class Player implements Damageable{
   /**
    * Health of Player
    */
@@ -75,6 +75,13 @@ public class Player{
    */
   public int getHealth(){
     return health;
+  }
+  /**
+   * Deducts health from the player
+   * @param damage The amount of health to Deduct
+   */
+  public void takeDamage(int damage){ 
+    health = health - damage;
   }
   /**
    * Checks if a wall is present one tile in the direction the player is attempting to move in
