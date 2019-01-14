@@ -461,7 +461,7 @@ public class Field{
         int randIndex = Math.abs(randgen.nextInt(4));
         //String randDirection = directionArray[randIndex];
         currentMonster.addToCount();
-        if ((currentMonster.getCount() % 250 == 0) && (currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor))){
+        if ((currentMonster.getCount() % 25000 == 0) && (currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor))){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
