@@ -423,8 +423,8 @@ public class Field{
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
     levelOne.addMonster(10,30,6,5);
-    levelOne.addMonster(10,50,15,5);
-    levelOne.addMonster(10,29,20,5);
+    levelOne.addMonster(10,50,10,5);
+    levelOne.addMonster(10,34,21,5);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -464,7 +464,7 @@ public class Field{
         if ((currentMonster.getCount() % 250 == 0) && (currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor))){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
-          currentMonster.move(directionArray[randIndex];
+          currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
