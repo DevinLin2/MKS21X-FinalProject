@@ -450,13 +450,12 @@ public class Field{
     screen.refresh();
     while (running){
       long currentTime = System.currentTimeMillis();
+      System.out.println(currentTime);
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
-      if (bob.getHealth() > 0){
-        screen.putString(1, 4, "Time: " + currentTime, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
-      }
+      screen.putString(1, 4, "Time: " + currentTime, Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
