@@ -452,8 +452,17 @@ public class Field{
     }
     screen.refresh();
     while (running){
-      terminal.moveCursor(bob.getX(),bob.getY());
-      terminal.putCharacter(bob.getCharacter());
+        portal exit = new portal(69,6);
+      if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter(bob.getCharacter());
+      }
+      else{
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter(bob.getCharacter());
+        terminal.moveCursor(exit.getX(),exit.getY());
+        terminal.putCharacter(exit.getLogo());
+      }
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
