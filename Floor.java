@@ -55,4 +55,11 @@ public class Floor{
   public int getLevel(){
     return level;
   }
+  /**
+   * removes a Monster from ArrayList of enemies
+   * @param toRemove the monster to remove from enemies
+   */
+  public void removeMonster(Monster toRemove){
+    enemies.remove(toRemove);
+  }
 }
