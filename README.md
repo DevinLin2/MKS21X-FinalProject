@@ -37,4 +37,6 @@ Use arrow keys to move the player (@) around a map
   - Created floor one
   - Made it impossible for a player to pass through walls
   - Made Monsters on the playing field
-  
+1/15/19
+  - Monster won't go there walls 
+  - Created a portal 
