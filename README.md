@@ -7,6 +7,7 @@ java -cp lanterna.jar:. Field
 
 TO USE PROGRAM: 
 Use arrow keys to move the player (@) around a map 
+Use spacebar to attack monsters within a 2 tile radius
 
 
 1/4/19
