@@ -422,9 +422,9 @@ public class Field{
     levelOne.addWall(73,21);
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
-    levelOne.addMonster(10,30,6,5);
-    levelOne.addMonster(10,50,10,5);
-    levelOne.addMonster(10,34,21,5);
+    levelOne.addMonster(3,30,6,5);
+    levelOne.addMonster(2,50,10,5);
+    levelOne.addMonster(5,34,21,5);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -456,6 +456,7 @@ public class Field{
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
+      String lastKey = "";
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
@@ -481,6 +482,7 @@ public class Field{
           bob.move("up");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "up";
         }
         if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -488,6 +490,7 @@ public class Field{
           bob.move("down");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "down";
         }
         if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -495,6 +498,7 @@ public class Field{
           bob.move("left");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "left";
         }
         if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -502,6 +506,18 @@ public class Field{
           bob.move("right");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "right";
+        }
+        if (key.getCharacter() == ' '){
+          for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+            Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+            if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && (currentMonster.getY() == bob.getY() - 1)){
+              bob.attack(currentMonster);
+              if (currentMonster.getHealth() <= 0){
+                playingField.currentFloor.getEnemies().remove(currentMonster);
+              }
+            }
+          }
         }
       }
     }

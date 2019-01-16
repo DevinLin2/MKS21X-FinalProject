@@ -80,7 +80,7 @@ public class Player implements Damageable{
    * Deducts health from the player
    * @param damage The amount of health to Deduct
    */
-  public void takeDamage(int damage){ 
+  public void takeDamage(int damage){
     health = health - damage;
   }
   /**
@@ -122,5 +122,12 @@ public class Player implements Damageable{
       }
     }
     return true;
+  }
+  /**
+   * Deducts damage from target monster
+   * @param target The monster in front of player
+   */
+  public void attack(Monster target){
+    target.takeDamage(this.damage);
   }
 }
