@@ -437,7 +437,6 @@ public class Field{
     String[] directionArray = new String[]{"up", "down", "left", "right"};
     Random randgen = new Random();
     screen.startScreen();
-    screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
       Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
@@ -450,13 +449,13 @@ public class Field{
         terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
       }
     }
-    screen.refresh();
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
       String lastKey = "";
+      screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       // for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
       //   Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
       //   int randIndex = Math.abs(randgen.nextInt(4));
@@ -468,7 +467,6 @@ public class Field{
       //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
       //     terminal.putCharacter(currentMonster.getCharacter());
       //     currentMonster.resetCount();
-      //     screen.refresh();
       //   }
       // }
       if (key != null){
@@ -511,6 +509,7 @@ public class Field{
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
             Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+            screen.putString(currentMonster.getX(), currentMonster.getY(), "Health: " + currentMonster.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
             if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() - 1) || (currentMonster.getY() == bob.getY() - 2))) {
               bob.attack(currentMonster);
               if (currentMonster.getHealth() <= 0){
@@ -538,6 +537,7 @@ public class Field{
           }
         }
       }
+      screen.refresh();
     }
   }
 }
