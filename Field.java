@@ -457,20 +457,20 @@ public class Field{
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
       String lastKey = "";
-      for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
-        Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-        int randIndex = Math.abs(randgen.nextInt(4));
-        currentMonster.addToCount();
-        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
-          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-          terminal.putCharacter(' ');
-          currentMonster.move(directionArray[randIndex]);
-          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-          terminal.putCharacter(currentMonster.getCharacter());
-          currentMonster.resetCount();
-          screen.refresh();
-        }
-      }
+      // for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+      //   Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+      //   int randIndex = Math.abs(randgen.nextInt(4));
+      //   currentMonster.addToCount();
+      //   if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
+      //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+      //     terminal.putCharacter(' ');
+      //     currentMonster.move(directionArray[randIndex]);
+      //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+      //     terminal.putCharacter(currentMonster.getCharacter());
+      //     currentMonster.resetCount();
+      //     screen.refresh();
+      //   }
+      // }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
