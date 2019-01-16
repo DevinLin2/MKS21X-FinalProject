@@ -444,10 +444,6 @@ public class Field{
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
-      for (int currentMonster = 0; currentMonster < current.getEnemies().size(); currentMonster++){
-        terminal.moveCursor(current.getEnemies().get(currentMonster).getX(), current.getEnemies().get(currentMonster).getY());
-        terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
-      }
     }
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
@@ -456,19 +452,19 @@ public class Field{
       terminal.setCursorVisible(false);
       String lastKey = "";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-      // for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
-      //   Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-      //   int randIndex = Math.abs(randgen.nextInt(4));
-      //   currentMonster.addToCount();
-      //   if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
-      //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-      //     terminal.putCharacter(' ');
-      //     currentMonster.move(directionArray[randIndex]);
-      //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-      //     terminal.putCharacter(currentMonster.getCharacter());
-      //     currentMonster.resetCount();
-      //   }
-      // }
+      for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+        Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+        int randIndex = Math.abs(randgen.nextInt(4));
+        currentMonster.addToCount();
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          currentMonster.move(directionArray[randIndex]);
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(currentMonster.getCharacter());
+          currentMonster.resetCount();
+        }
+      }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
@@ -510,31 +506,36 @@ public class Field{
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
             Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-            screen.putString(currentMonster.getX(), currentMonster.getY(), "Health: " + currentMonster.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-            if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() - 1) || (currentMonster.getY() == bob.getY() - 2))) {
-              bob.attack(currentMonster);
-              if (currentMonster.getHealth() <= 0){
-                playingField.currentFloor.getEnemies().remove(currentMonster);
-              }
+            if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
+              currentMonster.takeDamage(bob.getDamage());
             }
-            if (lastKey.equals("down") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() + 1) || (currentMonster.getY() == bob.getY() + 2))) {
-              bob.attack(currentMonster);
-              if (currentMonster.getHealth() <= 0){
-                playingField.currentFloor.getEnemies().remove(currentMonster);
-              }
+            if(currentMonster.getHealth() <= 0){
+              playingField.currentFloor.removeMonster(currentMonster);
             }
-            if (lastKey.equals("left") && ((currentMonster.getX() == bob.getX() - 1) || (currentMonster.getX() == bob.getX() - 2)) && (currentMonster.getY() == bob.getY())) {
-              bob.attack(currentMonster);
-              if (currentMonster.getHealth() <= 0){
-                playingField.currentFloor.getEnemies().remove(currentMonster);
-              }
-            }
-            if (lastKey.equals("right") && ((currentMonster.getX() == bob.getX() + 1) || (currentMonster.getX() == bob.getX() + 2)) && (currentMonster.getY() == bob.getY())) {
-              bob.attack(currentMonster);
-              if (currentMonster.getHealth() <= 0){
-                playingField.currentFloor.getEnemies().remove(currentMonster);
-              }
-            }
+            // if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() - 1) || (currentMonster.getY() == bob.getY() - 2))) {
+            //   bob.attack(currentMonster);
+            //   if (currentMonster.getHealth() <= 0){
+            //     playingField.currentFloor.getEnemies().remove(currentMonster);
+            //   }
+            // }
+            // if (lastKey.equals("down") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() + 1) || (currentMonster.getY() == bob.getY() + 2))) {
+            //   bob.attack(currentMonster);
+            //   if (currentMonster.getHealth() <= 0){
+            //     playingField.currentFloor.getEnemies().remove(currentMonster);
+            //   }
+            // }
+            // if (lastKey.equals("left") && ((currentMonster.getX() == bob.getX() - 1) || (currentMonster.getX() == bob.getX() - 2)) && (currentMonster.getY() == bob.getY())) {
+            //   bob.attack(currentMonster);
+            //   if (currentMonster.getHealth() <= 0){
+            //     playingField.currentFloor.getEnemies().remove(currentMonster);
+            //   }
+            // }
+            // if (lastKey.equals("right") && ((currentMonster.getX() == bob.getX() + 1) || (currentMonster.getX() == bob.getX() + 2)) && (currentMonster.getY() == bob.getY())) {
+            //   bob.attack(currentMonster);
+            //   if (currentMonster.getHealth() <= 0){
+            //     playingField.currentFloor.getEnemies().remove(currentMonster);
+            //   }
+            // }
           }
         }
       }
