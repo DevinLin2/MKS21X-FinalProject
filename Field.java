@@ -506,6 +506,7 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "right";
         }
+        screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
             Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
