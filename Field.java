@@ -510,32 +510,10 @@ public class Field{
               currentMonster.takeDamage(bob.getDamage());
             }
             if(currentMonster.getHealth() <= 0){
+              terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+              terminal.putCharacter(' ');
               playingField.currentFloor.removeMonster(currentMonster);
             }
-            // if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() - 1) || (currentMonster.getY() == bob.getY() - 2))) {
-            //   bob.attack(currentMonster);
-            //   if (currentMonster.getHealth() <= 0){
-            //     playingField.currentFloor.getEnemies().remove(currentMonster);
-            //   }
-            // }
-            // if (lastKey.equals("down") && (currentMonster.getX() == bob.getX()) && ((currentMonster.getY() == bob.getY() + 1) || (currentMonster.getY() == bob.getY() + 2))) {
-            //   bob.attack(currentMonster);
-            //   if (currentMonster.getHealth() <= 0){
-            //     playingField.currentFloor.getEnemies().remove(currentMonster);
-            //   }
-            // }
-            // if (lastKey.equals("left") && ((currentMonster.getX() == bob.getX() - 1) || (currentMonster.getX() == bob.getX() - 2)) && (currentMonster.getY() == bob.getY())) {
-            //   bob.attack(currentMonster);
-            //   if (currentMonster.getHealth() <= 0){
-            //     playingField.currentFloor.getEnemies().remove(currentMonster);
-            //   }
-            // }
-            // if (lastKey.equals("right") && ((currentMonster.getX() == bob.getX() + 1) || (currentMonster.getX() == bob.getX() + 2)) && (currentMonster.getY() == bob.getY())) {
-            //   bob.attack(currentMonster);
-            //   if (currentMonster.getHealth() <= 0){
-            //     playingField.currentFloor.getEnemies().remove(currentMonster);
-            //   }
-            // }
           }
         }
       }
