@@ -40,3 +40,6 @@ Use arrow keys to move the player (@) around a map
 1/15/19
   - Monster won't go there walls 
   - Created a portal 
+1/6/19
+  - Drew floor two on paper 
+  - added attack (doesn't work yet)
