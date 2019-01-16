@@ -124,10 +124,9 @@ public class Player implements Damageable{
     return true;
   }
   /**
-   * Deducts damage from target monster
-   * @param target The monster in front of player
+   * Getter method for damage
    */
-  public void attack(Monster target){
-    target.takeDamage(this.damage);
+  public int getDamage(){
+    return damage;
   }
 }
