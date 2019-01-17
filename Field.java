@@ -467,7 +467,7 @@ public class Field{
       }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
-          terminal.exitPrivateMode();
+          screen.stopScreen();
           running = false;
         }
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
