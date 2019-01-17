@@ -14,6 +14,9 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.Screen;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Field{
   /**
@@ -426,6 +429,15 @@ public class Field{
     levelOne.addMonster(10,50,10,5);
     levelOne.addMonster(10,34,21,5);
     currentFloor = levelOne;
+    floor = new ArrayList<Floor>();
+    Floor levelTwo = new Floor(2);
+    File f = new File("levelTwo.txt");
+    Scanner in = new Scanner(f);
+    while(in.hasNext()){
+      String line = in.nextLine();
+      String[] args = line.split(",");
+      levelTwo.addWall(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+    }
     floor.add(levelOne);
   }
   public static void main(String[] args) {
