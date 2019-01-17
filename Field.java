@@ -468,15 +468,15 @@ public class Field{
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
-        //String randDirection = directionArray[randIndex];
         currentMonster.addToCount();
-        if ((currentMonster.getCount() % 25000 == 0) && (currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor))){
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
+          screen.refresh();
         }
       }
       if (key != null){

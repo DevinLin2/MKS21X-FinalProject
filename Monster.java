@@ -53,10 +53,10 @@ public class Monster implements Damageable{
       y++;
     }
     if (direction.equals("left")){
-      x++;
+      x--;
     }
     if (direction.equals("right")){
-      x--;
+      x++;
     }
   }
   public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
