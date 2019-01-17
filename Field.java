@@ -437,6 +437,7 @@ public class Field{
     String[] directionArray = new String[]{"up", "down", "left", "right"};
     Random randgen = new Random();
     screen.startScreen();
+    screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
       Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
@@ -444,30 +445,36 @@ public class Field{
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
+      for (int currentMonster = 0; currentMonster < current.getEnemies().size(); currentMonster++){
+        terminal.moveCursor(current.getEnemies().get(currentMonster).getX(), current.getEnemies().get(currentMonster).getY());
+        terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
+      }
     }
+    screen.refresh();
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
       String lastKey = "";
-      screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         currentMonster.addToCount();
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
+          // add monster attack here
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
+          screen.refresh();
         }
       }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
-          screen.stopScreen();
+          terminal.exitPrivateMode();
           running = false;
         }
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
@@ -502,22 +509,18 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "right";
         }
-        screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
             Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-            if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
-              currentMonster.takeDamage(bob.getDamage());
-            }
-            if(currentMonster.getHealth() <= 0){
-              terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-              terminal.putCharacter(' ');
-              playingField.currentFloor.removeMonster(currentMonster);
+            if (lastKey.equals("up") && (currentMonster.getX() == bob.getX()) && (currentMonster.getY() == bob.getY() - 1)){
+              bob.attack(currentMonster);
+              if (currentMonster.getHealth() <= 0){
+                playingField.currentFloor.getEnemies().remove(currentMonster);
+              }
             }
           }
         }
       }
-      screen.refresh();
     }
   }
 }
