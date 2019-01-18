@@ -430,6 +430,7 @@ public class Field{
   }
   public static void main(String[] args) {
     Terminal terminal = TerminalFacade.createTextTerminal();
+    terminal.setCursorVisible(false);
     boolean running = true;
     Player bob = new Player(100, 10, 10, 2);
     Screen screen = new Screen(terminal);
@@ -449,7 +450,6 @@ public class Field{
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
-      terminal.setCursorVisible(false);
       String lastKey = "";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
