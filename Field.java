@@ -428,17 +428,24 @@ public class Field{
     levelOne.addMonster(10,30,6,5);
     levelOne.addMonster(10,50,10,5);
     levelOne.addMonster(10,34,21,5);
-    currentFloor = levelOne;
+    // currentFloor = LevelTwo;
     floor = new ArrayList<Floor>();
     Floor levelTwo = new Floor(2);
-    File f = new File("levelTwo.txt");
+    try{
+    File f = new File("LevelTwo.txt");
     Scanner in = new Scanner(f);
     while(in.hasNext()){
       String line = in.nextLine();
       String[] args = line.split(",");
       levelTwo.addWall(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
     }
+  }
+  catch(FileNotFoundException e){
+    e.printStackTrace();
+  }
     floor.add(levelOne);
+    //floor.add(levelTwo);
+    currentFloor = levelOne;
   }
   public static void main(String[] args) {
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -524,6 +531,10 @@ public class Field{
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
+
+        // if (key.getCharacter == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+          //  currentFloor = levelTwo;
+        //}
       }
     }
   }
