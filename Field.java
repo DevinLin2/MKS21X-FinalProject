@@ -456,7 +456,6 @@ public class Field{
     String[] directionArray = new String[]{"up", "down", "left", "right"};
     Random randgen = new Random();
     screen.startScreen();
-    screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
       Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
@@ -464,12 +463,7 @@ public class Field{
         terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
-      for (int currentMonster = 0; currentMonster < current.getEnemies().size(); currentMonster++){
-        terminal.moveCursor(current.getEnemies().get(currentMonster).getX(), current.getEnemies().get(currentMonster).getY());
-        terminal.putCharacter(current.getEnemies().get(currentMonster).getCharacter());
-      }
     }
-    screen.refresh();
     while (running){
         portal exit = new portal(69,6);
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
@@ -484,6 +478,8 @@ public class Field{
       }
       Key key = terminal.readInput();
       terminal.setCursorVisible(false);
+      String lastKey = "";
+      screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
@@ -495,12 +491,11 @@ public class Field{
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
-          screen.refresh();
         }
       }
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
-          terminal.exitPrivateMode();
+          screen.stopScreen();
           running = false;
         }
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
@@ -509,6 +504,7 @@ public class Field{
           bob.move("up");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "up";
         }
         if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -516,6 +512,7 @@ public class Field{
           bob.move("down");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "down";
         }
         if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -523,6 +520,7 @@ public class Field{
           bob.move("left");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "left";
         }
         if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
@@ -530,12 +528,28 @@ public class Field{
           bob.move("right");
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(bob.getCharacter());
+          lastKey = "right";
+        }
+        screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        if (key.getCharacter() == ' '){
+          for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+            Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+            if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
+              currentMonster.takeDamage(bob.getDamage());
+            }
+            if(currentMonster.getHealth() <= 0){
+              terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+              terminal.putCharacter(' ');
+              playingField.currentFloor.removeMonster(currentMonster);
+            }
+          }
         }
 
         // if (key.getCharacter == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
           //  currentFloor = levelTwo;
         //}
       }
+      screen.refresh();
     }
   }
 }
