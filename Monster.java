@@ -6,6 +6,7 @@ public class Monster implements Damageable{
   private int y;
   private char logo;
   private int count;
+  private ArrayList<Projectile> bullets;
   public Monster(int h,int xcord, int ycord, int d){
     health = h;
     damage = d;
@@ -13,6 +14,15 @@ public class Monster implements Damageable{
     y = ycord;
     logo = '\u2639';
     count = 0;
+    bullets = new ArrayList<Projectile>();
+    Projectile up = new Projectile(x,y,damage,"up");
+    Projectile down = new Projectile(x,y,damage,"down");
+    Projectile left = new Projectile(x,y,damage,"left");
+    Projectile right = new Projectile(x,y,damage,"right");
+    bullets.add(up);
+    bullets.add(down);
+    bullets.add(left);
+    bullets.add(right);
   }
   public char getCharacter(){
     return logo;
@@ -44,6 +54,9 @@ public class Monster implements Damageable{
   }
   public void resetCount(){
     count = 0;
+  }
+  public ArrayList<Projectile> getBullets(){
+    return bullets;
   }
   public void move(String direction){
     if (direction.equals("up")){
