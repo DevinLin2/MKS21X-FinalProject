@@ -7,6 +7,7 @@ java -cp lanterna.jar:. Field
 
 TO USE PROGRAM: 
 Use arrow keys to move the player (@) around a map 
+Use spacebar to attack monsters within a 2 tile radius
 
 
 1/4/19
@@ -37,4 +38,11 @@ Use arrow keys to move the player (@) around a map
   - Created floor one
   - Made it impossible for a player to pass through walls
   - Made Monsters on the playing field
-  
+1/15/19
+  - Monster won't go there walls 
+  - Created a portal 
+1/6/19
+  - Drew floor two on paper 
+  - added attack 
+  - the player is now able to click spacebar and any monsters in a 2 tile (changeable) radius will take damage
+  - if a monster takes enough damage where its health is reduced to less that or equal to 0, it will die and disappear from the screen
