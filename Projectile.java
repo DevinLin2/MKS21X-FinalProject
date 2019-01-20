@@ -4,12 +4,14 @@ public class Projectile {
   private String direction;
   private char logo;
   private int damage;
+  private int moveCount;
   public Projectile(int xCoord, int yCoord, int dam, String d){
     x = xCoord;
     y = yCoord;
     direction = d;
     damage = dam;
     logo = '\u25E6';
+    moveCount = 0;
   }
   public void move(){
     if (direction.equals("up")){
@@ -36,5 +38,14 @@ public class Projectile {
   }
   public char getLogo(){
     return logo;
+  }
+  public void addToMoveCount(){
+    moveCount++;
+  }
+  public void resetMoveCount(){
+    moveCount = 0;
+  }
+  public int getMoveCount(){
+    return moveCount;
   }
 }
