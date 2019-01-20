@@ -457,50 +457,41 @@ public class Field{
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
-        currentMonster.addToCount();
-        if (currentMonster.getCount() % 25000 == 0){
-          for (int r = 1; r <= currentMonster.getRange(); r++){
-            for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
-              Projectile currentBullet = currentMonster.getBullets().get(bullet);
-              currentBullet.move();
+        if ((currentMonster.getCount() % (25000 / currentMonster.getRange()) == 0) && (currentMonster.getCount() != 0)) {
+          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
+            Projectile currentBullet = currentMonster.getBullets().get(bullet);
+            if (currentBullet.getX() != currentMonster.getX() || currentBullet.getY() != currentMonster.getY()){
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(currentBullet.getLogo());
-              if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
-                bob.takeDamage(currentMonster.getDamage());
-              }
+              terminal.putCharacter(' ');
             }
-            // makes bullets at the end of their range disappear
-            if (r == currentMonster.getRange()){
-              int range = currentMonster.getRange();
-              for (int i = 1; i <= range; i++){
-                terminal.moveCursor(currentMonster.getX() - i, currentMonster.getY());
-                terminal.putCharacter(' ');
-                terminal.moveCursor(currentMonster.getX() + i, currentMonster.getY());
-                terminal.putCharacter(' ');
-                terminal.moveCursor(currentMonster.getX(), currentMonster.getY() - i);
-                terminal.putCharacter(' ');
-                terminal.moveCursor(currentMonster.getX(), currentMonster.getY() + i);
-                terminal.putCharacter(' ');
-              }
-              currentMonster.resetBullets();
+            currentBullet.move();
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(currentBullet.getLogo());
+            if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
+              bob.takeDamage(currentMonster.getDamage());
             }
           }
         }
-        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25001 == 0))) {
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25000 == 0))) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
-          currentMonster.resetBullets();
+          if (currentMonster.getCount() != 0){
+            currentMonster.resetBullets();
+          }
         }
+        currentMonster.addToCount();
       }
+      // actions when keys are pressed
       if (key != null){
         if (key.getKind() == Key.Kind.Escape){
           screen.stopScreen();
           running = false;
         }
+        // player movement up
         if (key.getKind() == Key.Kind.ArrowUp && bob.validMove("up", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
@@ -509,6 +500,7 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "up";
         }
+        // player movement down
         if (key.getKind() == Key.Kind.ArrowDown && bob.validMove("down", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
@@ -517,6 +509,7 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "down";
         }
+        // player movement left
         if (key.getKind() == Key.Kind.ArrowLeft && bob.validMove("left", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
@@ -525,6 +518,7 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "left";
         }
+        // player movement right
         if (key.getKind() == Key.Kind.ArrowRight && bob.validMove("right", playingField.floor, playingField.currentFloor)){
           terminal.moveCursor(bob.getX(), bob.getY());
           terminal.putCharacter(' ');
@@ -534,6 +528,7 @@ public class Field{
           lastKey = "right";
         }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        // player attack
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
             Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
