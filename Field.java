@@ -452,10 +452,23 @@ public class Field{
       Key key = terminal.readInput();
       String lastKey = "";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+      // following code responsible for monster movement,shooting, and damaging Player
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         currentMonster.addToCount();
+        if (currentMonster.getCount() % 5000 == 0){
+          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
+            Projectile currentBullet = currentMonster.getBullets().get(bullet);
+            if (currentBullet.getX() != currentMonster.getX() && currentBullet.getY() != currentMonster.getY()){
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(' ');
+            }
+            currentBullet.move();
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(currentBullet.getLogo());
+          }
+        }
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
@@ -463,6 +476,7 @@ public class Field{
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
+          currentMonster.resetBullets();
         }
       }
       if (key != null){
