@@ -446,7 +446,7 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
-    // fix to spawn monsters in immediatly
+    // fix to spawn monsters in immediatly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
@@ -467,21 +467,30 @@ public class Field{
             currentBullet.move();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
+            // player damage
             if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
               bob.takeDamage(currentMonster.getDamage());
             }
           }
         }
-        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25000 == 0))) {
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
-          if (currentMonster.getCount() != 0){
-            currentMonster.resetBullets();
-          }
+        }
+        if (currentMonster.getCount() == 25000){
+          currentMonster.resetBullets();
+          terminal.moveCursor(currentMonster.getX() + currentMonster.getRange(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          terminal.moveCursor(currentMonster.getX() - currentMonster.getRange(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY() + currentMonster.getRange());
+          terminal.putCharacter(' ');
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY() - currentMonster.getRange());
+          terminal.putCharacter(' ');
         }
         currentMonster.addToCount();
       }
