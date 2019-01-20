@@ -460,7 +460,7 @@ public class Field{
         if (currentMonster.getCount() % 5000 == 0){
           for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
             Projectile currentBullet = currentMonster.getBullets().get(bullet);
-            if (currentBullet.getX() != currentMonster.getX() && currentBullet.getY() != currentMonster.getY()){
+            if (currentBullet.getX() != currentMonster.getX() || currentBullet.getY() != currentMonster.getY()){
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
               terminal.putCharacter(' ');
             }
