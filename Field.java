@@ -462,10 +462,6 @@ public class Field{
           for (int r = 1; r <= currentMonster.getRange(); r++){
             for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
               Projectile currentBullet = currentMonster.getBullets().get(bullet);
-              if (currentBullet.getX() != currentMonster.getX() || currentBullet.getY() != currentMonster.getY()){
-                terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-                terminal.putCharacter(' ');
-              }
               currentBullet.move();
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
               terminal.putCharacter(currentBullet.getLogo());
@@ -475,9 +471,15 @@ public class Field{
             }
             // makes bullets at the end of their range disappear
             if (r == currentMonster.getRange()){
-              for (int i = 0; i < currentMonster.getBullets().size(); i++) {
-                Projectile current = currentMonster.getBullets().get(i);
-                terminal.moveCursor(current.getX(), current.getY());
+              int range = currentMonster.getRange();
+              for (int i = 1; i <= range; i++){
+                terminal.moveCursor(currentMonster.getX() - i, currentMonster.getY());
+                terminal.putCharacter(' ');
+                terminal.moveCursor(currentMonster.getX() + i, currentMonster.getY());
+                terminal.putCharacter(' ');
+                terminal.moveCursor(currentMonster.getX(), currentMonster.getY() - i);
+                terminal.putCharacter(' ');
+                terminal.moveCursor(currentMonster.getX(), currentMonster.getY() + i);
                 terminal.putCharacter(' ');
               }
               currentMonster.resetBullets();
