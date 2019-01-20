@@ -105,4 +105,17 @@ public class Monster implements Damageable{
     }
     return true;
   }
+  public void resetBullets(){
+    for (int i = 0; i < bullets.size(); i++) {
+      bullets.remove(i);
+    }
+    Projectile newUp = new Projectile(this.x,this.y,damage,"up");
+    Projectile newDown = new Projectile(this.x,this.y,damage,"down");
+    Projectile newLeft = new Projectile(this.x,this.y,damage,"left");
+    Projectile newRight = new Projectile(this.x,this.y,damage,"right");
+    bullets.add(newUp);
+    bullets.add(newDown);
+    bullets.add(newLeft);
+    bullets.add(newRight);
+  }
 }
