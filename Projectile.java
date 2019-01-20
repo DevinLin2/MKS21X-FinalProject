@@ -48,4 +48,10 @@ public class Projectile {
   public int getMoveCount(){
     return moveCount;
   }
+  public void setX(int newX){
+    x = newX;
+  }
+  public void setY(int newY){
+    y = newY;
+  }
 }
