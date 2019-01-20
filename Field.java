@@ -467,8 +467,6 @@ public class Field{
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
               terminal.putCharacter(currentBullet.getLogo());
             } else {
-              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(' ');
               currentBullet.move(directionArray[randIndex]);
             }
             // player damage
