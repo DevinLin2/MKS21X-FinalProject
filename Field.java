@@ -429,7 +429,6 @@ public class Field{
     levelOne.addMonster(10,50,10,5);
     levelOne.addMonster(10,34,21,5);
     // currentFloor = LevelTwo;
-    floor = new ArrayList<Floor>();
     Floor levelTwo = new Floor(2);
     try{
     File f = new File("LevelTwo.txt");
@@ -444,8 +443,16 @@ public class Field{
     e.printStackTrace();
   }
     floor.add(levelOne);
-    //floor.add(levelTwo);
+    floor.add(levelTwo);
     currentFloor = levelOne;
+  }
+  public void changeLevel(int lvlNum){
+      if (lvlNum == 1){
+        currentFloor = floor.get(0);
+      }
+      else {
+        currentFloor = floor.get(1);
+      }
   }
   public static void main(String[] args) {
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -465,7 +472,7 @@ public class Field{
       }
     }
     while (running){
-        portal exit = new portal(69,6);
+        portal exit = new portal(10,12);
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
         terminal.moveCursor(bob.getX(),bob.getY());
         terminal.putCharacter(bob.getCharacter());
@@ -530,6 +537,18 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "right";
         }
+        if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+          screen.clear();
+          //for(int c = 0; c < 81; c ++){
+          //  for(int r = 0; r < 25; r ++){
+          //    terminal.moveCursor(c,r);
+          //    terminal.putCharacter(' ');
+          //  }
+          //}
+          lastKey = "p";
+          playingField.changeLevel(2);
+          // currentFloor = floor.get(1);
+        }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
@@ -544,12 +563,8 @@ public class Field{
             }
           }
         }
-
-        // if (key.getCharacter == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
-          //  currentFloor = levelTwo;
-        //}
       }
       screen.refresh();
-    }
   }
+}
 }
