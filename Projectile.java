@@ -4,13 +4,17 @@ public class Projectile {
   private int y;
   private char logo;
   private int damage;
-  public Projectile(int xCoord, int yCoord, int dam){
+  private String direction;
+  private int count;
+  public Projectile(int xCoord, int yCoord, int dam, String dir){
     x = xCoord;
     y = yCoord;
     damage = dam;
     logo = '\u25E6';
+    direction = dir;
+    count = 0;
   }
-  public void move(String direction){
+  public void move(){
     if (direction.equals("up")){
       y--;
     }
@@ -41,6 +45,18 @@ public class Projectile {
   }
   public void setY(int newY){
     y = newY;
+  }
+  public String getDirection(){
+    return direction;
+  }
+  public int getCount(){
+    return count;
+  }
+  public void addToCount(){
+    count++;
+  }
+  public void resetCount(){
+    count = 0;
   }
   public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
     int index = floors.indexOf(currentFloor);

@@ -28,8 +28,10 @@ public class Field{
    * Constructs a Field which initiates the Arraylist of floors.
    * The floors will each hold an unique ArrayList of walls.
    */
+  private ArrayList<Projectile> playerBullets;
   public Field(){
     floor = new ArrayList<Floor>();
+    playerBullets = new ArrayList<Projectile>();
     Floor levelOne = new Floor(1);
     levelOne.addWall(3,8);
     levelOne.addWall(3,9);
@@ -451,7 +453,7 @@ public class Field{
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
-      String lastKey = "";
+      String lastKey = "up";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       // following code responsible for monster movement,shooting, and damaging Player
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
@@ -469,11 +471,27 @@ public class Field{
             if (bob.getHealth() <= 0){
               screen.stopScreen();
               System.out.println("You Lose :(");
+              running = false;
             }
           }
           currentMonster.resetCount();
         }
         currentMonster.addToCount();
+      }
+      // player bullet travel
+      for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
+        Projectile currentBullet = playingField.playerBullets.get(bullet);
+        if (currentBullet.getCount() % 5000 == 0){
+          if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
+            currentBullet.move();
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(currentBullet.getLogo());
+          } else {
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(' ');
+            playingField.playerBullets.remove(currentBullet);
+          }
+        }
       }
       // actions when keys are pressed
       if (key != null){
@@ -520,17 +538,19 @@ public class Field{
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // player attack
         if (key.getCharacter() == ' '){
-          for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
-            Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-            if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
-              currentMonster.takeDamage(bob.getDamage());
-            }
-            if(currentMonster.getHealth() <= 0){
-              terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-              terminal.putCharacter(' ');
-              playingField.currentFloor.removeMonster(currentMonster);
-            }
-          }
+          // for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
+          //   Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
+          //   if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
+          //     currentMonster.takeDamage(bob.getDamage());
+          //   }
+          //   if(currentMonster.getHealth() <= 0){
+          //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          //     terminal.putCharacter(' ');
+          //     playingField.currentFloor.removeMonster(currentMonster);
+          //   }
+          // }
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), lastKey);
+          playingField.playerBullets.add(bullet);
         }
       }
       screen.refresh();
