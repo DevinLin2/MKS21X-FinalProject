@@ -474,7 +474,9 @@ public class Field{
             if (currentBullet.getMoveCount() >= currentMonster.getRange()){
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
               terminal.putCharacter(' ');
-              currentMonster.resetBullets();
+              currentBullet.setX(currentMonster.getX());
+              currentBullet.setY(currentMonster.getY());
+              currentBullet.resetMoveCount();
             }
           }
         }
