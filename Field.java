@@ -465,13 +465,13 @@ public class Field{
               terminal.putCharacter(' ');
             }
             currentBullet.move();
-            currentMonster.addToBulletMoveCount();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
             if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
               bob.takeDamage(currentMonster.getDamage());
             }
           }
+          currentMonster.addToBulletMoveCount();
         }
         if (currentMonster.getBulletMoveCount() == currentMonster.getRange()){
           for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
