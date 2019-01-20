@@ -483,8 +483,10 @@ public class Field{
         Projectile currentBullet = playingField.playerBullets.get(bullet);
         if (currentBullet.getCount() % 5000 == 0){
           if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
-            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-            terminal.putCharacter(' ');
+            if (currentBullet.getX() != bob.getX() || currentBullet.getY() != bob.getY()){
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(' ');
+            }
             currentBullet.move();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
