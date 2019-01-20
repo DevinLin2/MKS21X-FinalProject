@@ -458,27 +458,19 @@ public class Field{
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)) {
-          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
-            Projectile currentBullet = currentMonster.getBullets().get(bullet);
-            if (currentBullet.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) {
-              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(' ');
-              currentBullet.move(directionArray[randIndex]);
-              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(currentBullet.getLogo());
-            } else {
-              currentBullet.move(directionArray[randIndex]);
-            }
-            // player damage
-            if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
-              bob.takeDamage(currentMonster.getDamage());
-            }
-          }
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
+          // player Damage
+          if (((bob.getX() <= currentMonster.getX()+currentMonster.getRange()) && (bob.getX() >= currentMonster.getX()-currentMonster.getRange())) && ((bob.getY() <= currentMonster.getY()+currentMonster.getRange()) && (bob.getY() >= currentMonster.getY()-currentMonster.getRange()))) {
+            bob.takeDamage(currentMonster.getDamage());
+            if (bob.getHealth() <= 0){
+              screen.stopScreen();
+              System.out.println("You Lose :(");
+            }
+          }
           currentMonster.resetCount();
         }
         currentMonster.addToCount();

@@ -6,7 +6,6 @@ public class Monster implements Damageable{
   private int y;
   private char logo;
   private int count;
-  private ArrayList<Projectile> bullets;
   private int range;
   public Monster(int h, int xcord, int ycord, int d, int r){
     health = h;
@@ -16,17 +15,6 @@ public class Monster implements Damageable{
     logo = '\u2639';
     count = 0;
     range = r;
-    bullets = new ArrayList<Projectile>();
-    for (int i = 1; i < range + 1; i++){
-      Projectile up = new Projectile(x,y-i,damage);
-      Projectile down = new Projectile(x,y+i,damage);
-      Projectile left = new Projectile(x-i,y,damage);
-      Projectile right = new Projectile(x+i,y,damage);
-      bullets.add(up);
-      bullets.add(down);
-      bullets.add(left);
-      bullets.add(right);
-    }
   }
   public char getCharacter(){
     return logo;
@@ -58,9 +46,6 @@ public class Monster implements Damageable{
   }
   public void resetCount(){
     count = 0;
-  }
-  public ArrayList<Projectile> getBullets(){
-    return bullets;
   }
   public int getRange(){
     return range;
