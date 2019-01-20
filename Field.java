@@ -479,9 +479,9 @@ public class Field{
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
-          if (currentMonster.getCount() != 0){
-            currentMonster.resetBullets();
-          }
+        }
+        if (currentMonster.getCount() == 25000){
+          currentMonster.resetBullets();
         }
         currentMonster.addToCount();
       }
