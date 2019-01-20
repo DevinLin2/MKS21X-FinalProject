@@ -424,7 +424,7 @@ public class Field{
     levelOne.addWall(73,23);
     levelOne.addMonster(3,30,6,5,1);
     levelOne.addMonster(2,50,10,5,3);
-    levelOne.addMonster(5,34,21,5,6);
+    levelOne.addMonster(5,34,21,5,2);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -460,11 +460,17 @@ public class Field{
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)) {
           for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
             Projectile currentBullet = currentMonster.getBullets().get(bullet);
-            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-            terminal.putCharacter(' ');
-            currentBullet.move(directionArray[randIndex]);
-            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-            terminal.putCharacter(currentBullet.getLogo());
+            if (currentBullet.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) {
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(' ');
+              currentBullet.move(directionArray[randIndex]);
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(currentBullet.getLogo());
+            } else {
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(' ');
+              currentBullet.move(directionArray[randIndex]);
+            }
             // player damage
             if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
               bob.takeDamage(currentMonster.getDamage());

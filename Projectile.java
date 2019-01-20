@@ -41,4 +41,37 @@ public class Projectile {
   public void setY(int newY){
     y = newY;
   }
+  public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
+    int index = floors.indexOf(currentFloor);
+    Floor current = floors.get(index);
+    if (direction.equals("up")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.x == current.getBorder().get(wall).getX()) && (this.y - 1 == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("down")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.x == current.getBorder().get(wall).getX()) && (this.y + 1 == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("left")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.x - 1 == current.getBorder().get(wall).getX()) && (this.y == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    if (direction.equals("right")){
+      for (int wall = 0; wall < current.getBorder().size(); wall++){
+        if ((this.x + 1 == current.getBorder().get(wall).getX()) && (this.y == current.getBorder().get(wall).getY())){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }
