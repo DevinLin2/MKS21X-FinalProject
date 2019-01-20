@@ -465,11 +465,19 @@ public class Field{
               terminal.putCharacter(' ');
             }
             currentBullet.move();
+            currentBullet.addToMoveCount();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
+            if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
+              bob.takeDamage(currentMonster.getDamage());
+            }
+            if (currentBullet.getMoveCount() == currentMonster.getRange()){
+              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+              terminal.putCharacter(' ');
+            }
           }
         }
-        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)){
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25000 == 0))) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
