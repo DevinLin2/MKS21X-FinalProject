@@ -453,7 +453,7 @@ public class Field{
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
-      String lastKey = "up";
+      String lastKey = "";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       // following code responsible for monster movement,shooting, and damaging Player
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
@@ -483,6 +483,8 @@ public class Field{
         Projectile currentBullet = playingField.playerBullets.get(bullet);
         if (currentBullet.getCount() % 5000 == 0){
           if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(' ');
             currentBullet.move();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
