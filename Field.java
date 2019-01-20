@@ -465,20 +465,22 @@ public class Field{
               terminal.putCharacter(' ');
             }
             currentBullet.move();
-            currentBullet.addToMoveCount();
+            currentMonster.addToBulletMoveCount();
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
             terminal.putCharacter(currentBullet.getLogo());
             if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
               bob.takeDamage(currentMonster.getDamage());
             }
-            if (currentBullet.getMoveCount() >= currentMonster.getRange()){
-              terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(' ');
-              currentBullet.setX(currentMonster.getX());
-              currentBullet.setY(currentMonster.getY());
-              currentBullet.resetMoveCount();
-            }
           }
+        }
+        if (currentMonster.getBulletMoveCount() == currentMonster.getRange()){
+          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
+            Projectile currentBullet = currentMonster.getBullets().get(bullet);
+            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+            terminal.putCharacter(' ');
+          }
+          currentMonster.resetBullets();
+          currentMonster.resetBulletMoveCount();
         }
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25000 == 0))) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());

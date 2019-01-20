@@ -8,6 +8,7 @@ public class Monster implements Damageable{
   private int count;
   private ArrayList<Projectile> bullets;
   private int range;
+  private int bulletMoveCount;
   public Monster(int h, int xcord, int ycord, int d, int r){
     health = h;
     damage = d;
@@ -122,5 +123,14 @@ public class Monster implements Damageable{
     bullets.add(newDown);
     bullets.add(newLeft);
     bullets.add(newRight);
+  }
+  public void addToBulletMoveCount(){
+    bulletMoveCount++;
+  }
+  public void resetBulletMoveCount(){
+    bulletMoveCount = 0;
+  }
+  public int getBulletMoveCount(){
+    return bulletMoveCount;
   }
 }
