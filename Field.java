@@ -472,15 +472,16 @@ public class Field{
             }
           }
           currentMonster.addToBulletMoveCount();
-        }
-        if (currentMonster.getBulletMoveCount() == currentMonster.getRange()){
-          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
-            Projectile currentBullet = currentMonster.getBullets().get(bullet);
-            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-            terminal.putCharacter(' ');
+          // makes bullets at the end of their range disappear
+          if (currentMonster.getBulletMoveCount() == currentMonster.getRange()){
+            for (int i = 0; i < currentMonster.getBullets().size(); i++) {
+              Projectile current = currentMonster.getBullets().get(i);
+              terminal.moveCursor(current.getX(), current.getY());
+              terminal.putCharacter(' ');
+            }
+            currentMonster.resetBullets();
+            currentMonster.resetBulletMoveCount();
           }
-          currentMonster.resetBullets();
-          currentMonster.resetBulletMoveCount();
         }
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25000 == 0))) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
