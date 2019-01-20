@@ -1,17 +1,15 @@
 public class Projectile {
   private int x;
   private int y;
-  private String direction;
   private char logo;
   private int damage;
-  public Projectile(int xCoord, int yCoord, int dam, String d){
+  public Projectile(int xCoord, int yCoord, int dam){
     x = xCoord;
     y = yCoord;
-    direction = d;
     damage = dam;
     logo = '\u25E6';
   }
-  public void move(){
+  public void move(String direction){
     if (direction.equals("up")){
       y--;
     }

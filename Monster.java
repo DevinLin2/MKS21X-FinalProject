@@ -17,14 +17,16 @@ public class Monster implements Damageable{
     count = 0;
     range = r;
     bullets = new ArrayList<Projectile>();
-    Projectile up = new Projectile(x,y,damage,"up");
-    Projectile down = new Projectile(x,y,damage,"down");
-    Projectile left = new Projectile(x,y,damage,"left");
-    Projectile right = new Projectile(x,y,damage,"right");
-    bullets.add(up);
-    bullets.add(down);
-    bullets.add(left);
-    bullets.add(right);
+    for (int i = 1; i < range + 1; i++){
+      Projectile up = new Projectile(x,y-i,damage);
+      Projectile down = new Projectile(x,y+i,damage);
+      Projectile left = new Projectile(x-i,y,damage);
+      Projectile right = new Projectile(x+i,y,damage);
+      bullets.add(up);
+      bullets.add(down);
+      bullets.add(left);
+      bullets.add(right);
+    }
   }
   public char getCharacter(){
     return logo;
@@ -109,18 +111,5 @@ public class Monster implements Damageable{
       }
     }
     return true;
-  }
-  public void resetBullets(){
-    for (int i = 0; i < bullets.size(); i++) {
-      bullets.remove(i);
-    }
-    Projectile newUp = new Projectile(this.x,this.y,damage,"up");
-    Projectile newDown = new Projectile(this.x,this.y,damage,"down");
-    Projectile newLeft = new Projectile(this.x,this.y,damage,"left");
-    Projectile newRight = new Projectile(this.x,this.y,damage,"right");
-    bullets.add(newUp);
-    bullets.add(newDown);
-    bullets.add(newLeft);
-    bullets.add(newRight);
   }
 }
