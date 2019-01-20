@@ -439,6 +439,7 @@ public class Field{
     Field playingField = new Field();
     String[] directionArray = new String[]{"up", "down", "left", "right"};
     Random randgen = new Random();
+    String lastKey = "";
     screen.startScreen();
     // puts down the walls in the terminal
     for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
@@ -453,7 +454,6 @@ public class Field{
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
-      String lastKey = "down";
       screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       // following code responsible for monster movement,shooting, and damaging Player
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
@@ -482,7 +482,6 @@ public class Field{
       for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
         Projectile currentBullet = playingField.playerBullets.get(bullet);
         currentBullet.addToCount();
-        screen.putString(currentBullet.getX(), currentBullet.getY(), "directon " + currentBullet.getDirection(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (currentBullet.getCount() % 5000 == 0){
           if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
             if (currentBullet.getX() != bob.getX() || currentBullet.getY() != bob.getY()){
