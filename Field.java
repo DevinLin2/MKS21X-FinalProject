@@ -482,6 +482,7 @@ public class Field{
       for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
         Projectile currentBullet = playingField.playerBullets.get(bullet);
         currentBullet.addToCount();
+        screen.putString(currentBullet.getX(), currentBullet.getY(), "count " + currentBullet.getCount(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (currentBullet.getCount() % 5000 == 0){
           if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
             if (currentBullet.getX() != bob.getX() || currentBullet.getY() != bob.getY()){
