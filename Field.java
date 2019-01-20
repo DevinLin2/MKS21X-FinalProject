@@ -471,9 +471,10 @@ public class Field{
             if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
               bob.takeDamage(currentMonster.getDamage());
             }
-            if (currentBullet.getMoveCount() == currentMonster.getRange()){
+            if (currentBullet.getMoveCount() >= currentMonster.getRange()){
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
               terminal.putCharacter(' ');
+              currentMonster.resetBullets();
             }
           }
         }
