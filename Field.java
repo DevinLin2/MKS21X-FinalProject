@@ -543,19 +543,20 @@ public class Field{
         }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // player attack
-        if (key.getCharacter() == ' '){
-          // for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
-          //   Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
-          //   if (((currentMonster.getX() <= bob.getX()+2) && (currentMonster.getX() >= bob.getX()-2)) && ((currentMonster.getY() <= bob.getY()+2) && (currentMonster.getY() >= bob.getY()-2))) {
-          //     currentMonster.takeDamage(bob.getDamage());
-          //   }
-          //   if(currentMonster.getHealth() <= 0){
-          //     terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-          //     terminal.putCharacter(' ');
-          //     playingField.currentFloor.removeMonster(currentMonster);
-          //   }
-          // }
-          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), lastKey);
+        if (key.getCharacter() == 'w'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "up");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 'a'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "left");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 's'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "down");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 'd'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "right");
           playingField.playerBullets.add(bullet);
         }
       }
