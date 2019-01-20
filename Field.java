@@ -439,15 +439,15 @@ public class Field{
     Random randgen = new Random();
     screen.startScreen();
     // puts down the walls in the terminal
-    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
-      Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
-      for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
-        terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
-        terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
-      }
-    }
     // fix to spawn monsters in immediatly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while (running){
+      for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
+        Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
+        for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
+          terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
+          terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
+        }
+      }
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
