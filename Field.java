@@ -439,15 +439,15 @@ public class Field{
     Random randgen = new Random();
     screen.startScreen();
     // puts down the walls in the terminal
+    for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
+      Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
+      for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
+        terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
+        terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
+      }
+    }
     // fix to spawn monsters in immediatly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while (running){
-      for (int floorLevel = 0; floorLevel < playingField.floor.size(); floorLevel++){ // put this into a function that is able to switch detween floors and call here
-        Floor current = playingField.floor.get(floorLevel);// fix this to make sense with currentFloor variable
-        for (int currentWall = 0; currentWall < current.getBorder().size(); currentWall++){
-          terminal.moveCursor(current.getBorder().get(currentWall).getX(),current.getBorder().get(currentWall).getY());
-          terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
-        }
-      }
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
       Key key = terminal.readInput();
@@ -458,11 +458,6 @@ public class Field{
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)) {
-          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-          terminal.putCharacter(' ');
-          currentMonster.move(directionArray[randIndex]);
-          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-          terminal.putCharacter(currentMonster.getCharacter());
           for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
             Projectile currentBullet = currentMonster.getBullets().get(bullet);
             terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
@@ -475,6 +470,11 @@ public class Field{
               bob.takeDamage(currentMonster.getDamage());
             }
           }
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(' ');
+          currentMonster.move(directionArray[randIndex]);
+          terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+          terminal.putCharacter(currentMonster.getCharacter());
           currentMonster.resetCount();
         }
         currentMonster.addToCount();
