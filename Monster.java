@@ -8,7 +8,7 @@ public class Monster implements Damageable{
   private int count;
   private ArrayList<Projectile> bullets;
   private int range;
-  public Monster(int h,int xcord, int ycord, int d, int r){
+  public Monster(int h, int xcord, int ycord, int d, int r){
     health = h;
     damage = d;
     x = xcord;

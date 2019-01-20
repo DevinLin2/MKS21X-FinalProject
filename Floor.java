@@ -33,8 +33,8 @@ public class Floor{
   /**
    * Constructs a new Monster and adds it to the ArrayList of monsters.
    */
-  public void addMonster(int health, int x, int y, int damage){
-    Monster toAdd = new Monster(health, x, y, damage);
+  public void addMonster(int health, int x, int y, int damage, int range){
+    Monster toAdd = new Monster(health, x, y, damage, range);
     enemies.add(toAdd);
   }
   /**
