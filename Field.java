@@ -446,6 +446,7 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
+    // fix to spawn monsters in immediatly
     while (running){
       terminal.moveCursor(bob.getX(),bob.getY());
       terminal.putCharacter(bob.getCharacter());
@@ -457,30 +458,30 @@ public class Field{
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
         currentMonster.addToCount();
-        if (currentMonster.getCount() % 5000 == 0){
-          for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
-            Projectile currentBullet = currentMonster.getBullets().get(bullet);
-            if (currentBullet.getX() != currentMonster.getX() || currentBullet.getY() != currentMonster.getY()){
+        if (currentMonster.getCount() % 25000 == 0){
+          for (int r = 1; r <= currentMonster.getRange(); r++){
+            for (int bullet = 0; bullet < currentMonster.getBullets().size(); bullet++) {
+              Projectile currentBullet = currentMonster.getBullets().get(bullet);
+              if (currentBullet.getX() != currentMonster.getX() || currentBullet.getY() != currentMonster.getY()){
+                terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
+                terminal.putCharacter(' ');
+              }
+              currentBullet.move();
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-              terminal.putCharacter(' ');
+              terminal.putCharacter(currentBullet.getLogo());
+              if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
+                bob.takeDamage(currentMonster.getDamage());
+              }
             }
-            currentBullet.move();
-            terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
-            terminal.putCharacter(currentBullet.getLogo());
-            if (currentBullet.getX() == bob.getX() && currentBullet.getY() == bob.getY()){
-              bob.takeDamage(currentMonster.getDamage());
+            // makes bullets at the end of their range disappear
+            if (r == currentMonster.getRange()){
+              for (int i = 0; i < currentMonster.getBullets().size(); i++) {
+                Projectile current = currentMonster.getBullets().get(i);
+                terminal.moveCursor(current.getX(), current.getY());
+                terminal.putCharacter(' ');
+              }
+              currentMonster.resetBullets();
             }
-          }
-          currentMonster.addToBulletMoveCount();
-          // makes bullets at the end of their range disappear
-          if (currentMonster.getBulletMoveCount() == currentMonster.getRange()){
-            for (int i = 0; i < currentMonster.getBullets().size(); i++) {
-              Projectile current = currentMonster.getBullets().get(i);
-              terminal.moveCursor(current.getX(), current.getY());
-              terminal.putCharacter(' ');
-            }
-            currentMonster.resetBullets();
-            currentMonster.resetBulletMoveCount();
           }
         }
         if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() == 0 || (currentMonster.getCount() % 25001 == 0))) {
