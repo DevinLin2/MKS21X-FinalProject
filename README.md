@@ -1,19 +1,16 @@
 # MKS21X-FinalProject
-TO COMPILE:
-javac -cp lanterna.jar:. Field.java
-
 TO RUN:
-java -cp lanterna.jar:. Field
+bash run.sh
 
-TO USE PROGRAM: 
-Use arrow keys to move the player ('U') around a map
+TO PLAY GAME: 
+Use arrow keys to move the player (initially 'U') around a map
 When you take damage you change to a different letter of the reverse alphbet order. If you take any more damage while you are 'A' you lose. 
-Use w,a,s,d to shoot a projectile. 
+Use w,a,s,d to shoot a projectile. you are able to shoot multiple projectiles at a time.
 Use p when you are on top of a portal to move on to the next level. 
 
 
 GOAL:
-Kill all the monsters on each level, then process to the next level via portal. 
+Kill all the monsters on each of the 3 levels, then proceed to the next level via portal. 
 
 
 1/4/19
