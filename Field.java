@@ -39,7 +39,7 @@ public class Field{
     floor = new ArrayList<Floor>();
     playerBullets = new ArrayList<Projectile>();
     Floor levelOne = new Floor(1);
-    // evverytime a monster is hit it takes 5000 damage. keep that in mind when setting its health
+    // evverytime a monster is hit it takes 1000 damage. keep that in mind when setting its health
     // level one monsters
     levelOne.addMonster(2500,30,6,1,2);
     levelOne.addMonster(2500,50,10,1,2);
@@ -47,7 +47,7 @@ public class Field{
     levelOne.addMonster(2500,34,6,1,3);
     levelOne.addMonster(2500,50,11,1,3);
     levelOne.addMonster(2500,34,20,1,3);
-    try{
+    try{ // adding first floor walls
       File f = new File("LevelOne.txt");
       Scanner in = new Scanner(f);
       while(in.hasNext()){
