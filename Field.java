@@ -485,7 +485,7 @@ public class Field{
             if (currentMonster.getHealth() <= 0){
               terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
               terminal.putCharacter(' ');
-              playingField.floor.getEnemies().remove(currentMonster);
+              playingField.currentFloor.removeMonster(currentMonster);
             }
           }
         }
