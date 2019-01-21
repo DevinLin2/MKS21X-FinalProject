@@ -31,7 +31,8 @@ public class Player implements Damageable{
     health = h;
     xCoord = x;
     yCoord = y;
-    logo = '\u0040';
+    logo = (char) health;
+    // logo = '\u0040';
     damage = d;
   }
   /**

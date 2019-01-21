@@ -105,7 +105,7 @@ public class Field{
         terminal.putCharacter(exit.getLogo());
       }
       Key key = terminal.readInput();
-      screen.putString(1,3,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+      //screen.putString(0,0,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       // following code responsible for monster movement,shooting, and damaging Player
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
@@ -120,8 +120,9 @@ public class Field{
           if (((bob.getX() <= currentMonster.getX()+currentMonster.getRange()) && (bob.getX() >= currentMonster.getX()-currentMonster.getRange())) && ((bob.getY() <= currentMonster.getY()+currentMonster.getRange()) && (bob.getY() >= currentMonster.getY()-currentMonster.getRange()))) {
             bob.takeDamage(currentMonster.getDamage());
             if (bob.getHealth() <= 0){
-              screen.stopScreen();
-              System.out.println("You Lose :(");
+              screen.clear();
+              screen.putString(35,15,"YOU LOSE", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+              screen.putString(29,16,"PRESS ESC TO EXIT PROGRAM", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
               running = false;
             }
           }
@@ -205,7 +206,7 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "right";
         }
-        if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+        if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()) {
           if(playingField.currentFloor.getEnemies().size() == 0){
             if (playingField.currentFloor.getLevel() == 1){
               Floor levelTwo = new Floor(2);
@@ -317,24 +318,29 @@ public class Field{
               levelThree.addMonster(20000,38,12,10,6);
             }
           }
-          screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-          // player attack
-          if (key.getCharacter() == 'w'){
-            Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "up");
-            playingField.playerBullets.add(bullet);
+          if (playingField.currentFloor.getLevel() == 3 && playingField.currentFloor.getEnemies().size() == 0) {
+            screen.clear();
+            screen.putString(29,15,"YOU WIN!!!!!!!!!!!!!!!!!!!", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            screen.putString(29,16,"PRESS ESC TO EXIT PROGRAM", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            running = false;
           }
-          if (key.getCharacter() == 'a'){
-            Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "left");
-            playingField.playerBullets.add(bullet);
-          }
-          if (key.getCharacter() == 's'){
-            Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "down");
-            playingField.playerBullets.add(bullet);
-          }
-          if (key.getCharacter() == 'd'){
-            Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "right");
-            playingField.playerBullets.add(bullet);
-          }
+        }
+        // player attack
+        if (key.getCharacter() == 'w'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "up");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 'a'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "left");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 's'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "down");
+          playingField.playerBullets.add(bullet);
+        }
+        if (key.getCharacter() == 'd'){
+          Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "right");
+          playingField.playerBullets.add(bullet);
         }
         screen.refresh();
       }
