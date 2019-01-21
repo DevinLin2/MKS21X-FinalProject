@@ -424,9 +424,10 @@ public class Field{
     levelOne.addWall(73,21);
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
-    levelOne.addMonster(3,30,6,5,1);
-    levelOne.addMonster(20,50,10,5,3);
-    levelOne.addMonster(5,34,21,5,2);
+    // evverytime a monster is hit it takes 5000 damage. keep that in mind when setting its health
+    levelOne.addMonster(15000,30,6,5,1);
+    levelOne.addMonster(20000,50,10,5,3);
+    levelOne.addMonster(25000,34,21,5,2);
     currentFloor = levelOne;
     floor.add(levelOne);
   }
@@ -434,7 +435,7 @@ public class Field{
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.setCursorVisible(false);
     boolean running = true;
-    Player bob = new Player(100, 10, 10, 2);
+    Player bob = new Player(100, 10, 10, 1);
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
     String[] directionArray = new String[]{"up", "down", "left", "right"};
