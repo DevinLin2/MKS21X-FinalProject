@@ -7,7 +7,7 @@ java -cp lanterna.jar:. Field
 
 TO USE PROGRAM: 
 Use arrow keys to move the player ('U') around a map
-When you take damage you change to a different letter of the alphbet. If you take any more damage while you are 'A' you lose. 
+When you take damage you change to a different letter of the reverse alphbet order. If you take any more damage while you are 'A' you lose. 
 Use w,a,s,d to shoot a projectile. 
 Use p when you are on top of a portal to move on to the next level. 
 
