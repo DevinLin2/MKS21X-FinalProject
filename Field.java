@@ -428,25 +428,13 @@ public class Field{
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
     // evverytime a monster is hit it takes 5000 damage. keep that in mind when setting its health
-    levelOne.addMonster(15000,30,6,5,1);
-    levelOne.addMonster(20000,50,10,5,3);
-    levelOne.addMonster(25000,34,21,5,2);
+    levelOne.addMonster(2500,30,6,5,4);
+    levelOne.addMonster(2500,50,10,5,4);
+    levelOne.addMonster(2500,34,21,5,4);
     currentFloor = levelOne;
-    levelOne.addMonster(10,30,6,5,1);
-    levelOne.addMonster(10,50,10,5,3);
-    levelOne.addMonster(10,34,21,5,2);
-    Floor levelTwo = new Floor(2);
-    try{
-    File f = new File("LevelTwo.txt");
-    Scanner in = new Scanner(f);
-    while(in.hasNext()){
-      String line = in.nextLine();
-      String[] argss = line.split(",");
-    }
-  }
-  catch(FileNotFoundException e){
-    e.printStackTrace();
-  }
+    levelOne.addMonster(2500,30,6,5,4);
+    levelOne.addMonster(2500,50,10,5,4);
+    levelOne.addMonster(2500,34,21,5,4);
     floor.add(levelOne);
     //floor.add(levelTwo);
     currentFloor = levelOne;
@@ -481,7 +469,7 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
-    portal exit = new portal(69,6);
+    portal exit = new portal(69,6); // 69 6
     while (running){
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
         terminal.moveCursor(bob.getX(),bob.getY());
@@ -595,6 +583,7 @@ public class Field{
           lastKey = "right";
         }
         if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+          if(playingField.currentFloor.getEnemies().size() == 0){
           if (playingField.currentFloor.getLevel() == 1){
           Floor levelTwo = new Floor(2);
           try{
@@ -634,7 +623,22 @@ public class Field{
           exit.setY(7);
           terminal.moveCursor(exit.getX(),exit.getY());
           terminal.putCharacter('\u06DE');
+          levelTwo.addMonster(2500,18,7,5,4);
+          levelTwo.addMonster(2500,14,4,5,4);
+          levelTwo.addMonster(2500,40,4,5,4);
+          levelTwo.addMonster(2500,29,15,5,4);
+          levelTwo.addMonster(2500,47,22,5,4);
+          levelTwo.addMonster(2500,67,18,5,4);
+          levelTwo.addMonster(2500,29,6,5,4);
+          levelTwo.addMonster(2500,41,3,5,4);
+          levelTwo.addMonster(2500,47,18,5,4);
+          levelTwo.addMonster(2500,53,21,5,4);
+          levelTwo.addMonster(2500,40,4,5,4);
+          levelTwo.addMonster(2500,49,14,5,4);
+          levelTwo.addMonster(2500,70,5,5,4);
+          levelTwo.addMonster(2500,65,13,5,4);
         }
+
         else{
           Floor levelThree = new Floor(3);
           try{
@@ -673,8 +677,26 @@ public class Field{
         exit.setY(13);
         terminal.moveCursor(exit.getX(),exit.getY());
         terminal.putCharacter('\u06DE');
+        levelThree.addMonster(2500,18,5,5,4);
+        levelThree.addMonster(2500,24,8,5,4);
+        levelThree.addMonster(2500,53,3,5,4);
+        levelThree.addMonster(2500,61,4,2,4);
+        levelThree.addMonster(2500,63,13,5,4);
+        levelThree.addMonster(2500,72,10,5,4);
+        levelThree.addMonster(2500,67,15,5,4);
+        levelThree.addMonster(2500,37,21,5,4);
+        levelThree.addMonster(2500,40,23,5,4);
+        levelThree.addMonster(2500,34,9,5,4);
+        levelThree.addMonster(2500,44,16,5,4);
+        levelThree.addMonster(2500,40,10,5,4);
+        levelThree.addMonster(2500,50,8,5,4);
+        levelThree.addMonster(2500,30,14,5,4);
+        levelThree.addMonster(2500,39,13,5,4);
+        levelThree.addMonster(20000,38,12,10,6);
+
         }
       }
+    }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // player attack
         if (key.getCharacter() == 'w'){
