@@ -435,16 +435,16 @@ public class Field{
     Scanner in = new Scanner(f);
     while(in.hasNext()){
       String line = in.nextLine();
-      String[] args = line.split(",");
-      levelTwo.addWall(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+      String[] argss = line.split(",");
+      levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
     }
   }
   catch(FileNotFoundException e){
     e.printStackTrace();
   }
     floor.add(levelOne);
-    floor.add(levelTwo);
     currentFloor = levelOne;
+    //floor.add(levelTwo);
   }
   public void changeLevel(int lvlNum){
       if (lvlNum == 1){
@@ -538,13 +538,26 @@ public class Field{
           lastKey = "right";
         }
         if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
-          screen.clear();
           //for(int c = 0; c < 81; c ++){
           //  for(int r = 0; r < 25; r ++){
           //    terminal.moveCursor(c,r);
           //    terminal.putCharacter(' ');
           //  }
           //}
+          Floor levelTwo = new Floor(2);
+          try{
+          File f = new File("LevelTwo.txt");
+          Scanner in = new Scanner(f);
+          while(in.hasNext()){
+            String line = in.nextLine();
+            String[] argss = line.split(",");
+            levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
+          }
+        }
+        catch(FileNotFoundException e){
+          e.printStackTrace();
+        }
+        playingField.floor.add(levelTwo);
           lastKey = "p";
           playingField.changeLevel(2);
           // currentFloor = floor.get(1);
