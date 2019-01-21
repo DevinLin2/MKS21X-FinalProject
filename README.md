@@ -6,9 +6,11 @@ TO RUN:
 java -cp lanterna.jar:. Field
 
 TO USE PROGRAM: 
-Use arrow keys to move the player (@) around a map 
+Use arrow keys to move the player ('U') around a map
+When you take damage you change to a different letter of the alphbet. If you take any more damage while you are 'A' you lose. 
 Use w,a,s,d to shoot a projectile. 
 Use p when you are on top of a portal to move on to the next level. 
+
 
 GOAL:
 Kill all the monsters on each level, then process to the next level via portal. 
@@ -78,4 +80,12 @@ Kill all the monsters on each level, then process to the next level via portal.
  - Lvl 3 typed into a txt file
  - Lvl 3 read in right
  - Portal works for all lvls 
+
+1/21/19
+  - Merged portal code and shooting code 
+  - Changed lvl 3 a bit
+  - Changed character 
+  - Created lose and win screen 
+  - Made game decently hard. 
+  - Game done 
  
