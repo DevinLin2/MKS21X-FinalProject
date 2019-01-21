@@ -538,12 +538,6 @@ public class Field{
           lastKey = "right";
         }
         if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
-          //for(int c = 0; c < 81; c ++){
-          //  for(int r = 0; r < 25; r ++){
-          //    terminal.moveCursor(c,r);
-          //    terminal.putCharacter(' ');
-          //  }
-          //}
           Floor levelTwo = new Floor(2);
           try{
           File f = new File("LevelTwo.txt");
@@ -560,7 +554,16 @@ public class Field{
         playingField.floor.add(levelTwo);
           lastKey = "p";
           playingField.changeLevel(2);
-          // currentFloor = floor.get(1);
+          for(int c = 0; c < 81; c ++){
+            for(int r = 0; r < 25; r ++){
+              terminal.moveCursor(c,r);
+              terminal.putCharacter(' ');
+            }
+          }
+          for (int currentWalll = 0; currentWalll < playingField.floor.get(1).getBorder().size(); currentWalll ++){
+            terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
+            terminal.putCharacter('\u25fb');
+          }
         }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
