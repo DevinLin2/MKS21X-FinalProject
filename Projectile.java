@@ -1,56 +1,20 @@
 import java.util.ArrayList;
-public class Monster implements Damageable{
-  private int health;
-  private int damage;
+public class Projectile {
   private int x;
   private int y;
   private char logo;
+  private int damage;
+  private String direction;
   private int count;
-  private int range;
-  public Monster(int h, int xcord, int ycord, int d, int r){
-    health = h;
-    damage = d;
-    x = xcord;
-    y = ycord;
-    logo = '\u2639';
-    count = 0;
-    range = r;
-  }
-  public char getCharacter(){
-    return logo;
-  }
-  /**
-   * Deducts health from the Monster
-   * @param damage The amount of health to Deduct
-   */
-  public void takeDamage(int damage){
-    health = health - damage;
-  }
-  public int getDamage(){
-    return damage;
-  }
-  public int getHealth(){
-    return health;
-  }
-  public int getX(){
-    return x;
-  }
-  public int getY(){
-    return y;
-  }
-  public int getCount(){
-    return count;
-  }
-  public void addToCount(){
-    count++;
-  }
-  public void resetCount(){
+  public Projectile(int xCoord, int yCoord, int dam, String dir){
+    x = xCoord;
+    y = yCoord;
+    damage = dam;
+    logo = '\u25E6';
+    direction = dir;
     count = 0;
   }
-  public int getRange(){
-    return range;
-  }
-  public void move(String direction){
+  public void move(){
     if (direction.equals("up")){
       y--;
     }
@@ -63,6 +27,36 @@ public class Monster implements Damageable{
     if (direction.equals("right")){
       x++;
     }
+  }
+  public int getX(){
+    return x;
+  }
+  public int getY(){
+    return y;
+  }
+  public int getDamage(){
+    return damage;
+  }
+  public char getLogo(){
+    return logo;
+  }
+  public void setX(int newX){
+    x = newX;
+  }
+  public void setY(int newY){
+    y = newY;
+  }
+  public String getDirection(){
+    return direction;
+  }
+  public int getCount(){
+    return count;
+  }
+  public void addToCount(){
+    count++;
+  }
+  public void resetCount(){
+    count = 0;
   }
   public boolean validMove(String direction, ArrayList<Floor> floors, Floor currentFloor){
     int index = floors.indexOf(currentFloor);

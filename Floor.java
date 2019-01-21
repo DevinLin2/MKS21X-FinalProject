@@ -33,8 +33,8 @@ public class Floor{
   /**
    * Constructs a new Monster and adds it to the ArrayList of monsters.
    */
-  public void addMonster(int health, int x, int y, int damage){
-    Monster toAdd = new Monster(health, x, y, damage);
+  public void addMonster(int health, int x, int y, int damage, int range){
+    Monster toAdd = new Monster(health, x, y, damage, range);
     enemies.add(toAdd);
   }
   /**
@@ -54,5 +54,12 @@ public class Floor{
    */
   public int getLevel(){
     return level;
+  }
+  /**
+   * removes a Monster from ArrayList of enemies
+   * @param toRemove the monster to remove from enemies
+   */
+  public void removeMonster(Monster toRemove){
+    enemies.remove(toRemove);
   }
 }

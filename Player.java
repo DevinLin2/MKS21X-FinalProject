@@ -80,7 +80,7 @@ public class Player implements Damageable{
    * Deducts health from the player
    * @param damage The amount of health to Deduct
    */
-  public void takeDamage(int damage){ 
+  public void takeDamage(int damage){
     health = health - damage;
   }
   /**
@@ -122,5 +122,11 @@ public class Player implements Damageable{
       }
     }
     return true;
+  }
+  /**
+   * Getter method for damage
+   */
+  public int getDamage(){
+    return damage;
   }
 }
