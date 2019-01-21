@@ -41,8 +41,21 @@ Use spacebar to attack monsters within a 2 tile radius
 1/15/19
   - Monster won't go there walls 
   - Created a portal 
-1/6/19
+1/16/19
   - Drew floor two on paper 
   - added attack 
   - the player is now able to click spacebar and any monsters in a 2 tile (changeable) radius will take damage
   - if a monster takes enough damage where its health is reduced to less that or equal to 0, it will die and disappear from the screen
+1/17/19
+  - Created a file reader to read in lvl 2 
+1/18/19
+  - Started working on the portal
+  - Started work on projectile 
+1/19/19
+ - Worked on projectile 
+ - Worked making the portal work
+1/20/19
+ - Portal works
+ - Projectile works but is slow 
+ - End message created 
+ 
