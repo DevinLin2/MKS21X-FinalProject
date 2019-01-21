@@ -432,9 +432,35 @@ public class Field{
     levelOne.addMonster(20000,50,10,5,3);
     levelOne.addMonster(25000,34,21,5,2);
     currentFloor = levelOne;
+    levelOne.addMonster(10,30,6,5,1);
+    levelOne.addMonster(10,50,10,5,3);
+    levelOne.addMonster(10,34,21,5,2);
+    Floor levelTwo = new Floor(2);
+    try{
+    File f = new File("LevelTwo.txt");
+    Scanner in = new Scanner(f);
+    while(in.hasNext()){
+      String line = in.nextLine();
+      String[] argss = line.split(",");
+    }
+  }
+  catch(FileNotFoundException e){
+    e.printStackTrace();
+  }
     floor.add(levelOne);
     //floor.add(levelTwo);
     currentFloor = levelOne;
+  }
+  public void changeLevel(int lvlNum){
+      if (lvlNum == 1){
+        currentFloor = floor.get(0);
+      }
+      if (lvlNum == 2){
+        currentFloor = floor.get(1);
+      }
+      else{
+        currentFloor = floor.get(2);
+      }
   }
   public static void main(String[] args) {
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -455,9 +481,8 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
-    // fix to spawn monsters in immediatly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    portal exit = new portal(69,6);
     while (running){
-        portal exit = new portal(69,6);
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
         terminal.moveCursor(bob.getX(),bob.getY());
         terminal.putCharacter(bob.getCharacter());
@@ -474,7 +499,7 @@ public class Field{
       for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
         Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
         int randIndex = Math.abs(randgen.nextInt(4));
-        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 25000 == 0)) {
+        if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 10000 == 0)) {
           terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
           terminal.putCharacter(' ');
           currentMonster.move(directionArray[randIndex]);
@@ -510,7 +535,7 @@ public class Field{
       for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
         Projectile currentBullet = playingField.playerBullets.get(bullet);
         currentBullet.addToCount();
-        if (currentBullet.getCount() % 5000 == 0){
+        if (currentBullet.getCount() % 1000 == 0){
           if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
             if (currentBullet.getX() != bob.getX() || currentBullet.getY() != bob.getY()){
               terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
@@ -569,6 +594,87 @@ public class Field{
           terminal.putCharacter(bob.getCharacter());
           lastKey = "right";
         }
+        if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+          if (playingField.currentFloor.getLevel() == 1){
+          Floor levelTwo = new Floor(2);
+          try{
+          File f = new File("LevelTwo.txt");
+          Scanner in = new Scanner(f);
+          while(in.hasNext()){
+            String line = in.nextLine();
+            String[] argss = line.split(",");
+            levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
+          }
+        }
+        catch(FileNotFoundException e){
+          e.printStackTrace();
+        }
+        playingField.floor.add(levelTwo);
+          lastKey = "p";
+          playingField.changeLevel(2);
+          for(int c = 0; c < 81; c ++){
+            for(int r = 0; r < 25; r ++){
+              terminal.moveCursor(c,r);
+              terminal.putCharacter(' ');
+            }
+          }
+          for (int currentWalll = 0; currentWalll < playingField.floor.get(1).getBorder().size(); currentWalll ++){
+            terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
+            terminal.putCharacter('\u25fb');
+          }
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.setX(4);
+          bob.setY(20);
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter('\u0040');
+          terminal.moveCursor(exit.getX(), exit.getY());
+          terminal.putCharacter(' ');
+          exit.setX(78);
+          exit.setY(7);
+          terminal.moveCursor(exit.getX(),exit.getY());
+          terminal.putCharacter('\u06DE');
+        }
+        else{
+          Floor levelThree = new Floor(3);
+          try{
+          File ff = new File("LevelThree.txt");
+          Scanner in = new Scanner(ff);
+          while(in.hasNext()){
+            String line = in.nextLine();
+            String[] argsss = line.split(",");
+            levelThree.addWall(Integer.parseInt(argsss[0]), Integer.parseInt(argsss[1]));
+          }
+        }
+        catch(FileNotFoundException e){
+          e.printStackTrace();
+        }
+        playingField.floor.add(levelThree);
+        playingField.changeLevel(3);
+        for(int c = 0; c < 81; c ++){
+          for(int r = 0; r < 25; r ++){
+            terminal.moveCursor(c,r);
+            terminal.putCharacter(' ');
+          }
+        }
+        for (int currentWalll = 0; currentWalll < playingField.floor.get(2).getBorder().size(); currentWalll ++){
+          terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentWalll).getX(), playingField.floor.get(2).getBorder().get(currentWalll).getY());
+          terminal.putCharacter('\u25fb');
+        }
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter(' ');
+        bob.setX(4);
+        bob.setY(20);
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter('\u0040');
+        terminal.moveCursor(exit.getX(), exit.getY());
+        terminal.putCharacter(' ');
+        exit.setX(58);
+        exit.setY(13);
+        terminal.moveCursor(exit.getX(),exit.getY());
+        terminal.putCharacter('\u06DE');
+        }
+      }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // player attack
         if (key.getCharacter() == 'w'){
@@ -587,12 +693,8 @@ public class Field{
           Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "right");
           playingField.playerBullets.add(bullet);
         }
-
-        // if (key.getCharacter == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
-          //  currentFloor = levelTwo;
-        //}
       }
       screen.refresh();
-    }
   }
+}
 }
