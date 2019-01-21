@@ -129,4 +129,10 @@ public class Player implements Damageable{
   public int getDamage(){
     return damage;
   }
+  public void setX(int x){
+    xCoord = x;
+  }
+  public void setY(int y){
+    yCoord = y;
+  }
 }

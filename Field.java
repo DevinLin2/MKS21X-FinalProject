@@ -471,8 +471,8 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
+    portal exit = new portal(69,6);
     while (running){
-        portal exit = new portal(10,12);
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
         terminal.moveCursor(bob.getX(),bob.getY());
         terminal.putCharacter(bob.getCharacter());
@@ -564,6 +564,18 @@ public class Field{
             terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
             terminal.putCharacter('\u25fb');
           }
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter(' ');
+          bob.setX(4);
+          bob.setY(20);
+          terminal.moveCursor(bob.getX(),bob.getY());
+          terminal.putCharacter('\u0040');
+          terminal.moveCursor(exit.getX(), exit.getY());
+          terminal.putCharacter(' ');
+          exit.setX(78);
+          exit.setY(7);
+          terminal.moveCursor(exit.getX(),exit.getY());
+          terminal.putCharacter('\u06DE');
         }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
