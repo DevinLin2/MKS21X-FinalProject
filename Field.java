@@ -77,7 +77,7 @@ public class Field{
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.setCursorVisible(false);
     boolean running = true;
-    Player bob = new Player(100, 10, 10, 1);
+    Player bob = new Player(85, 10, 10, 1);
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
     String[] directionArray = new String[]{"up", "down", "left", "right"};
@@ -314,7 +314,7 @@ public class Field{
                 levelThree.addMonster(2500,50,8,1,2);
                 levelThree.addMonster(2500,30,14,1,2);
                 levelThree.addMonster(2500,39,13,1,3);
-                levelThree.addMonster(20000,38,12,2,6);
+                levelThree.addMonster(20000,38,12,1,6);
               }
             }
             if (playingField.currentFloor.getLevel() == 3 && playingField.currentFloor.getEnemies().size() == 0) {
