@@ -1,1 +1,1 @@
-java -cp lanterna.jar Field
+java -cp lanterna.jar:. Field
