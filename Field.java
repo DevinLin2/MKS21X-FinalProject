@@ -41,12 +41,12 @@ public class Field{
     Floor levelOne = new Floor(1);
     // evverytime a monster is hit it takes 5000 damage. keep that in mind when setting its health
     // level one monsters
-    levelOne.addMonster(2500,30,6,5,2);
-    levelOne.addMonster(2500,50,10,5,2);
-    levelOne.addMonster(2500,34,21,5,2);
-    levelOne.addMonster(2500,34,6,5,3);
-    levelOne.addMonster(2500,50,11,5,3);
-    levelOne.addMonster(2500,34,20,5,3);
+    levelOne.addMonster(2500,30,6,1,2);
+    levelOne.addMonster(2500,50,10,1,2);
+    levelOne.addMonster(2500,34,21,1,2);
+    levelOne.addMonster(2500,34,6,1,3);
+    levelOne.addMonster(2500,50,11,1,3);
+    levelOne.addMonster(2500,34,20,1,3);
     try{
       File f = new File("LevelOne.txt");
       Scanner in = new Scanner(f);
@@ -107,7 +107,7 @@ public class Field{
           terminal.putCharacter(exit.getLogo());
         }
         Key key = terminal.readInput();
-        screen.putString(1,1,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        //screen.putString(1,1,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // following code responsible for monster movement,shooting, and damaging Player
         for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
           Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
@@ -121,7 +121,7 @@ public class Field{
             // player Damage
             if (((bob.getX() <= currentMonster.getX()+currentMonster.getRange()) && (bob.getX() >= currentMonster.getX()-currentMonster.getRange())) && ((bob.getY() <= currentMonster.getY()+currentMonster.getRange()) && (bob.getY() >= currentMonster.getY()-currentMonster.getRange()))) {
               bob.takeDamage(currentMonster.getDamage());
-              if (bob.getHealth() <= 0){
+              if (bob.getHealth() <= 64){
                 mode = "lose";
               }
             }
@@ -246,20 +246,20 @@ public class Field{
                 exit.setY(7);
                 terminal.moveCursor(exit.getX(),exit.getY());
                 terminal.putCharacter('\u06DE');
-                levelTwo.addMonster(2500,18,7,5,2);
-                levelTwo.addMonster(2500,14,4,5,2);
-                levelTwo.addMonster(2500,40,4,5,2);
-                levelTwo.addMonster(2500,29,15,5,2);
-                levelTwo.addMonster(2500,47,22,5,2);
-                levelTwo.addMonster(2500,67,18,5,2);
-                levelTwo.addMonster(2500,29,6,5,2);
-                levelTwo.addMonster(2500,41,3,5,2);
-                levelTwo.addMonster(2500,47,18,5,2);
-                levelTwo.addMonster(2500,53,21,5,2);
-                levelTwo.addMonster(2500,40,4,5,2);
-                levelTwo.addMonster(2500,49,14,5,2);
-                levelTwo.addMonster(2500,70,5,5,2);
-                levelTwo.addMonster(2500,65,13,5,2);
+                levelTwo.addMonster(2500,18,7,1,2);
+                levelTwo.addMonster(2500,14,4,1,2);
+                levelTwo.addMonster(2500,40,4,1,3);
+                levelTwo.addMonster(2500,29,15,1,2);
+                levelTwo.addMonster(2500,47,22,1,3);
+                levelTwo.addMonster(2500,67,18,1,2);
+                levelTwo.addMonster(2500,29,6,1,2);
+                levelTwo.addMonster(2500,41,3,1,3);
+                levelTwo.addMonster(2500,47,18,1,2);
+                levelTwo.addMonster(2500,53,21,1,2);
+                levelTwo.addMonster(2500,40,4,1,2);
+                levelTwo.addMonster(2500,49,14,1,3);
+                levelTwo.addMonster(2500,70,5,1,2);
+                levelTwo.addMonster(2500,65,13,1,3);
               }
               else{
                 Floor levelThree = new Floor(3);
@@ -299,22 +299,22 @@ public class Field{
                 exit.setY(13);
                 terminal.moveCursor(exit.getX(),exit.getY());
                 terminal.putCharacter('\u06DE');
-                levelThree.addMonster(2500,18,5,5,2);
-                levelThree.addMonster(2500,24,8,5,2);
-                levelThree.addMonster(2500,53,3,5,2);
-                levelThree.addMonster(2500,61,4,2,2);
-                levelThree.addMonster(2500,63,13,5,2);
-                levelThree.addMonster(2500,72,10,5,2);
-                levelThree.addMonster(2500,67,15,5,2);
-                levelThree.addMonster(2500,37,21,5,2);
-                levelThree.addMonster(2500,40,23,5,2);
-                levelThree.addMonster(2500,34,9,5,2);
-                levelThree.addMonster(2500,44,16,5,2);
-                levelThree.addMonster(2500,40,10,5,2);
-                levelThree.addMonster(2500,50,8,5,2);
-                levelThree.addMonster(2500,30,14,5,2);
-                levelThree.addMonster(2500,39,13,5,2);
-                levelThree.addMonster(20000,38,12,10,6);
+                levelThree.addMonster(2500,18,5,1,3);
+                levelThree.addMonster(2500,24,8,1,2);
+                levelThree.addMonster(2500,53,3,1,2);
+                levelThree.addMonster(2500,61,4,1,3);
+                levelThree.addMonster(2500,63,13,1,2);
+                levelThree.addMonster(2500,72,10,1,3);
+                levelThree.addMonster(2500,67,15,1,2);
+                levelThree.addMonster(2500,37,21,1,2);
+                levelThree.addMonster(2500,40,23,1,3);
+                levelThree.addMonster(2500,34,9,1,2);
+                levelThree.addMonster(2500,44,16,1,2);
+                levelThree.addMonster(2500,40,10,1,3);
+                levelThree.addMonster(2500,50,8,1,2);
+                levelThree.addMonster(2500,30,14,1,2);
+                levelThree.addMonster(2500,39,13,1,3);
+                levelThree.addMonster(20000,38,12,2,6);
               }
             }
             if (playingField.currentFloor.getLevel() == 3 && playingField.currentFloor.getEnemies().size() == 0) {
@@ -342,16 +342,14 @@ public class Field{
         }
       }
       if (mode.equals("win")) {
-        screen.clear();
-        terminal.clearScreen();
-        screen.putString(35, 15, "YOU WIN", Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
-        screen.putString(29, 15, "PRESS ESC TO CLOSE PROGRAM", Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
+        screen.stopScreen();
+        running = false;
+        System.out.println("YOU WIN!!!!!!!!!!!!!!!!!!!");
       }
       if (mode.equals("lose")) {
-        screen.clear();
-        terminal.clearScreen();
-        screen.putString(35, 15, "YOU LOSE", Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
-        screen.putString(29, 15, "PRESS ESC TO CLOSE PROGRAM", Terminal.Color.DEFAULT, Terminal.Color.DEFAULT);
+        screen.stopScreen();
+        running = false;
+        System.out.println("YOU LOSE :(");
       }
     }
   }
