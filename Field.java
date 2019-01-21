@@ -444,14 +444,16 @@ public class Field{
   }
     floor.add(levelOne);
     currentFloor = levelOne;
-    //floor.add(levelTwo);
   }
   public void changeLevel(int lvlNum){
       if (lvlNum == 1){
         currentFloor = floor.get(0);
       }
-      else {
+      if (lvlNum == 2){
         currentFloor = floor.get(1);
+      }
+      else{
+        currentFloor = floor.get(2);
       }
   }
   public static void main(String[] args) {
@@ -538,6 +540,7 @@ public class Field{
           lastKey = "right";
         }
         if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
+          if (playingField.currentFloor.getLevel() == 1){
           Floor levelTwo = new Floor(2);
           try{
           File f = new File("LevelTwo.txt");
@@ -577,6 +580,46 @@ public class Field{
           terminal.moveCursor(exit.getX(),exit.getY());
           terminal.putCharacter('\u06DE');
         }
+        else{
+          Floor levelThree = new Floor(3);
+          try{
+          File ff = new File("LevelThree.txt");
+          Scanner in = new Scanner(ff);
+          while(in.hasNext()){
+            String line = in.nextLine();
+            String[] argsss = line.split(",");
+            levelThree.addWall(Integer.parseInt(argsss[0]), Integer.parseInt(argsss[1]));
+          }
+        }
+        catch(FileNotFoundException e){
+          e.printStackTrace();
+        }
+        playingField.floor.add(levelThree);
+        playingField.changeLevel(3);
+        for(int c = 0; c < 81; c ++){
+          for(int r = 0; r < 25; r ++){
+            terminal.moveCursor(c,r);
+            terminal.putCharacter(' ');
+          }
+        }
+        for (int currentWalll = 0; currentWalll < playingField.floor.get(2).getBorder().size(); currentWalll ++){
+          terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentWalll).getX(), playingField.floor.get(2).getBorder().get(currentWalll).getY());
+          terminal.putCharacter('\u25fb');
+        }
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter(' ');
+        bob.setX(4);
+        bob.setY(20);
+        terminal.moveCursor(bob.getX(),bob.getY());
+        terminal.putCharacter('\u0040');
+        terminal.moveCursor(exit.getX(), exit.getY());
+        terminal.putCharacter(' ');
+        exit.setX(58);
+        exit.setY(13);
+        terminal.moveCursor(exit.getX(),exit.getY());
+        terminal.putCharacter('\u06DE');
+        }
+      }
         screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         if (key.getCharacter() == ' '){
           for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
