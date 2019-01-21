@@ -425,7 +425,7 @@ public class Field{
     levelOne.addWall(73,22);
     levelOne.addWall(73,23);
     levelOne.addMonster(3,30,6,5,1);
-    levelOne.addMonster(2,50,10,5,3);
+    levelOne.addMonster(20,50,10,5,3);
     levelOne.addMonster(5,34,21,5,2);
     currentFloor = levelOne;
     floor.add(levelOne);
