@@ -82,6 +82,7 @@ public class Player implements Damageable{
    */
   public void takeDamage(int damage){
     health = health - damage;
+    logo = (char) health;
   }
   /**
    * Checks if a wall is present one tile in the direction the player is attempting to move in
