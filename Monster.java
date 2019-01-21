@@ -6,13 +6,15 @@ public class Monster implements Damageable{
   private int y;
   private char logo;
   private int count;
-  public Monster(int h,int xcord, int ycord, int d){
+  private int range;
+  public Monster(int h, int xcord, int ycord, int d, int r){
     health = h;
     damage = d;
     x = xcord;
     y = ycord;
     logo = '\u2639';
     count = 0;
+    range = r;
   }
   public char getCharacter(){
     return logo;
@@ -44,6 +46,9 @@ public class Monster implements Damageable{
   }
   public void resetCount(){
     count = 0;
+  }
+  public int getRange(){
+    return range;
   }
   public void move(String direction){
     if (direction.equals("up")){
