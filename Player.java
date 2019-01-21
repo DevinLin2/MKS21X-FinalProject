@@ -31,7 +31,7 @@ public class Player implements Damageable{
     health = h;
     xCoord = x;
     yCoord = y;
-    logo = '\u0040';
+    logo = (char)health;
     damage = d;
   }
   /**
@@ -82,6 +82,7 @@ public class Player implements Damageable{
    */
   public void takeDamage(int damage){
     health = health - damage;
+    logo = (char) health;
   }
   /**
    * Checks if a wall is present one tile in the direction the player is attempting to move in
