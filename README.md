@@ -7,7 +7,11 @@ java -cp lanterna.jar:. Field
 
 TO USE PROGRAM: 
 Use arrow keys to move the player (@) around a map 
-Use spacebar to attack monsters within a 2 tile radius
+Use w,a,s,d to shoot a projectile. 
+Use p when you are on top of a portal to move on to the next level. 
+
+GOAL:
+Kill all the monsters on each level, then process to the next level via portal. 
 
 
 1/4/19
@@ -58,4 +62,8 @@ Use spacebar to attack monsters within a 2 tile radius
  - Portal works
  - Projectile works but is slow 
  - End message created 
+ - Lvl 3 drawn on paper
+ - Lvl 3 typed into a txt file
+ - Lvl 3 read in right
+ - Portal works for all lvls 
  
