@@ -20,58 +20,58 @@ import java.util.Scanner;
 
 public class Field{
   /**
-   * ArrayList of different floors each a different level
-   */
+  * ArrayList of different floors each a different level
+  */
   private ArrayList<Floor> floor;
   /**
-   * current floor of player
-   */
+  * current floor of player
+  */
   private Floor currentFloor;
   /**
-   * ArrayList of the bullets fired by player
-   */
+  * ArrayList of the bullets fired by player
+  */
   private ArrayList<Projectile> playerBullets;
   /**
-   * Constructs a Field which initiates the Arraylist of floors.
-   * The floors will each hold an unique ArrayList of walls.
-   */
+  * Constructs a Field which initiates the Arraylist of floors.
+  * The floors will each hold an unique ArrayList of walls.
+  */
   public Field(){
     floor = new ArrayList<Floor>();
     playerBullets = new ArrayList<Projectile>();
     Floor levelOne = new Floor(1);
     // evverytime a monster is hit it takes 5000 damage. keep that in mind when setting its health
     // level one monsters
-    levelOne.addMonster(15000,30,6,5,1);
-    levelOne.addMonster(20000,50,10,5,3);
-    levelOne.addMonster(25000,34,21,5,2);
-    levelOne.addMonster(10,30,6,5,1);
-    levelOne.addMonster(10,50,10,5,3);
-    levelOne.addMonster(10,34,21,5,2);
+    levelOne.addMonster(2500,30,6,5,4);
+    levelOne.addMonster(2500,50,10,5,4);
+    levelOne.addMonster(2500,34,21,5,4);
+    levelOne.addMonster(2500,34,6,5,4);
+    levelOne.addMonster(2500,50,11,5,4);
+    levelOne.addMonster(2500,34,20,5,4);
     try{
-    File f = new File("LevelOne.txt");
-    Scanner in = new Scanner(f);
-    while(in.hasNext()){
-      String line = in.nextLine();
-      String[] arguments = line.split(",");
-      levelOne.addWall(Integer.parseInt(arguments[0]), Integer.parseInt(arguments[1]));
+      File f = new File("LevelOne.txt");
+      Scanner in = new Scanner(f);
+      while(in.hasNext()){
+        String line = in.nextLine();
+        String[] arguments = line.split(",");
+        levelOne.addWall(Integer.parseInt(arguments[0]), Integer.parseInt(arguments[1]));
+      }
     }
-  }
-  catch(FileNotFoundException e){
-    e.printStackTrace();
-  }
+    catch(FileNotFoundException e){
+      e.printStackTrace();
+    }
     floor.add(levelOne);
     currentFloor = levelOne;
   }
   public void changeLevel(int lvlNum){
-      if (lvlNum == 1){
-        currentFloor = floor.get(0);
-      }
-      if (lvlNum == 2){
-        currentFloor = floor.get(1);
-      }
-      else{
-        currentFloor = floor.get(2);
-      }
+    if (lvlNum == 1){
+      currentFloor = floor.get(0);
+    }
+    if (lvlNum == 2){
+      currentFloor = floor.get(1);
+    }
+    else{
+      currentFloor = floor.get(2);
+    }
   }
   public static void main(String[] args) {
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -92,7 +92,7 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
-    portal exit = new portal(69,6);
+    portal exit = new portal(69,6); // 69 6
     while (running){
       if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
         terminal.moveCursor(bob.getX(),bob.getY());
@@ -206,86 +206,117 @@ public class Field{
           lastKey = "right";
         }
         if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()){
-          if (playingField.currentFloor.getLevel() == 1){
-            Floor levelTwo = new Floor(2);
-          try{
-            File f = new File("LevelTwo.txt");
-            Scanner in = new Scanner(f);
-            while(in.hasNext()){
-              String line = in.nextLine();
-              String[] argss = line.split(",");
-              levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
-            }
-          }
-          catch(FileNotFoundException e){
-            e.printStackTrace();
-          }
-          playingField.floor.add(levelTwo);
-            lastKey = "p";
-            playingField.changeLevel(2);
-            for(int c = 0; c < 81; c ++){
-              for(int r = 0; r < 25; r ++){
-                terminal.moveCursor(c,r);
-                terminal.putCharacter(' ');
+          if(playingField.currentFloor.getEnemies().size() == 0){
+            if (playingField.currentFloor.getLevel() == 1){
+              Floor levelTwo = new Floor(2);
+              try{
+                File f = new File("LevelTwo.txt");
+                Scanner in = new Scanner(f);
+                while(in.hasNext()){
+                  String line = in.nextLine();
+                  String[] argss = line.split(",");
+                  levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
+                }
               }
-            }
-            for (int currentWalll = 0; currentWalll < playingField.floor.get(1).getBorder().size(); currentWalll ++){
-              terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
-              terminal.putCharacter('\u25fb');
-            }
-            terminal.moveCursor(bob.getX(),bob.getY());
-            terminal.putCharacter(' ');
-            bob.setX(4);
-            bob.setY(20);
-            terminal.moveCursor(bob.getX(),bob.getY());
-            terminal.putCharacter('\u0040');
-            terminal.moveCursor(exit.getX(), exit.getY());
-            terminal.putCharacter(' ');
-            exit.setX(78);
-            exit.setY(7);
-            terminal.moveCursor(exit.getX(),exit.getY());
-            terminal.putCharacter('\u06DE');
-          }
-          else{
-            Floor levelThree = new Floor(3);
-            try{
-            File ff = new File("LevelThree.txt");
-            Scanner in = new Scanner(ff);
-            while(in.hasNext()){
-              String line = in.nextLine();
-              String[] argsss = line.split(",");
-              levelThree.addWall(Integer.parseInt(argsss[0]), Integer.parseInt(argsss[1]));
-            }
-          }
-          catch(FileNotFoundException e){
-            e.printStackTrace();
-          }
-          playingField.floor.add(levelThree);
-          playingField.changeLevel(3);
-          for(int c = 0; c < 81; c ++){
-            for(int r = 0; r < 25; r ++){
-              terminal.moveCursor(c,r);
+              catch(FileNotFoundException e){
+                e.printStackTrace();
+              }
+              playingField.floor.add(levelTwo);
+              lastKey = "p";
+              playingField.changeLevel(2);
+              for(int c = 0; c < 81; c ++){
+                for(int r = 0; r < 25; r ++){
+                  terminal.moveCursor(c,r);
+                  terminal.putCharacter(' ');
+                }
+              }
+              for (int currentWalll = 0; currentWalll < playingField.floor.get(1).getBorder().size(); currentWalll ++){
+                terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
+                terminal.putCharacter('\u25fb');
+              }
+              terminal.moveCursor(bob.getX(),bob.getY());
               terminal.putCharacter(' ');
+              bob.setX(4);
+              bob.setY(20);
+              terminal.moveCursor(bob.getX(),bob.getY());
+              terminal.putCharacter('\u0040');
+              terminal.moveCursor(exit.getX(), exit.getY());
+              terminal.putCharacter(' ');
+              exit.setX(78);
+              exit.setY(7);
+              terminal.moveCursor(exit.getX(),exit.getY());
+              terminal.putCharacter('\u06DE');
+              levelTwo.addMonster(2500,18,7,5,4);
+              levelTwo.addMonster(2500,14,4,5,4);
+              levelTwo.addMonster(2500,40,4,5,4);
+              levelTwo.addMonster(2500,29,15,5,4);
+              levelTwo.addMonster(2500,47,22,5,4);
+              levelTwo.addMonster(2500,67,18,5,4);
+              levelTwo.addMonster(2500,29,6,5,4);
+              levelTwo.addMonster(2500,41,3,5,4);
+              levelTwo.addMonster(2500,47,18,5,4);
+              levelTwo.addMonster(2500,53,21,5,4);
+              levelTwo.addMonster(2500,40,4,5,4);
+              levelTwo.addMonster(2500,49,14,5,4);
+              levelTwo.addMonster(2500,70,5,5,4);
+              levelTwo.addMonster(2500,65,13,5,4);
+            }
+            else{
+              Floor levelThree = new Floor(3);
+              try{
+                File ff = new File("LevelThree.txt");
+                Scanner in = new Scanner(ff);
+                while(in.hasNext()){
+                  String line = in.nextLine();
+                  String[] argsss = line.split(",");
+                  levelThree.addWall(Integer.parseInt(argsss[0]), Integer.parseInt(argsss[1]));
+                }
+              }
+              catch(FileNotFoundException e){
+                e.printStackTrace();
+              }
+              playingField.floor.add(levelThree);
+              playingField.changeLevel(3);
+              for(int c = 0; c < 81; c ++){
+                for(int r = 0; r < 25; r ++){
+                  terminal.moveCursor(c,r);
+                  terminal.putCharacter(' ');
+                }
+              }
+              for (int currentWalll = 0; currentWalll < playingField.floor.get(2).getBorder().size(); currentWalll ++){
+                terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentWalll).getX(), playingField.floor.get(2).getBorder().get(currentWalll).getY());
+                terminal.putCharacter('\u25fb');
+              }
+              terminal.moveCursor(bob.getX(),bob.getY());
+              terminal.putCharacter(' ');
+              bob.setX(4);
+              bob.setY(20);
+              terminal.moveCursor(bob.getX(),bob.getY());
+              terminal.putCharacter('\u0040');
+              terminal.moveCursor(exit.getX(), exit.getY());
+              terminal.putCharacter(' ');
+              exit.setX(58);
+              exit.setY(13);
+              terminal.moveCursor(exit.getX(),exit.getY());
+              terminal.putCharacter('\u06DE');
+              levelThree.addMonster(2500,18,5,5,4);
+              levelThree.addMonster(2500,24,8,5,4);
+              levelThree.addMonster(2500,53,3,5,4);
+              levelThree.addMonster(2500,61,4,2,4);
+              levelThree.addMonster(2500,63,13,5,4);
+              levelThree.addMonster(2500,72,10,5,4);
+              levelThree.addMonster(2500,67,15,5,4);
+              levelThree.addMonster(2500,37,21,5,4);
+              levelThree.addMonster(2500,40,23,5,4);
+              levelThree.addMonster(2500,34,9,5,4);
+              levelThree.addMonster(2500,44,16,5,4);
+              levelThree.addMonster(2500,40,10,5,4);
+              levelThree.addMonster(2500,50,8,5,4);
+              levelThree.addMonster(2500,30,14,5,4);
+              levelThree.addMonster(2500,39,13,5,4);
+              levelThree.addMonster(20000,38,12,10,6);
             }
           }
-          for (int currentWalll = 0; currentWalll < playingField.floor.get(2).getBorder().size(); currentWalll ++){
-            terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentWalll).getX(), playingField.floor.get(2).getBorder().get(currentWalll).getY());
-            terminal.putCharacter('\u25fb');
-          }
-          terminal.moveCursor(bob.getX(),bob.getY());
-          terminal.putCharacter(' ');
-          bob.setX(4);
-          bob.setY(20);
-          terminal.moveCursor(bob.getX(),bob.getY());
-          terminal.putCharacter('\u0040');
-          terminal.moveCursor(exit.getX(), exit.getY());
-          terminal.putCharacter(' ');
-          exit.setX(58);
-          exit.setY(13);
-          terminal.moveCursor(exit.getX(),exit.getY());
-          terminal.putCharacter('\u06DE');
-          }
-        }
           screen.putString(0, 0, "Last Key: " + lastKey, Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           // player attack
           if (key.getCharacter() == 'w'){
@@ -306,6 +337,7 @@ public class Field{
           }
         }
         screen.refresh();
+      }
     }
   }
 }
