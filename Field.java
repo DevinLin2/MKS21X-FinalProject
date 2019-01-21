@@ -476,6 +476,19 @@ public class Field{
           }
           currentMonster.resetCount();
         }
+        // monster take damage
+        for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
+          Projectile currentBullet = playingField.playerBullets.get(bullet);
+          if (currentMonster.getX() == currentBullet.getX() && currentMonster.getY() == currentBullet.getY()){
+            currentMonster.takeDamage(bob.getDamage());
+            // removes monster if their health drops to 0
+            if (currentMonster.getHealth() <= 0){
+              terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
+              terminal.putCharacter(' ');
+              playingField.floor.getEnemies().remove(currentMonster);
+            }
+          }
+        }
         currentMonster.addToCount();
       }
       // player bullet travel
