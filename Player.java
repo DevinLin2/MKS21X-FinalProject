@@ -126,13 +126,22 @@ public class Player implements Damageable{
   }
   /**
    * Getter method for damage
+   * @return damage of player
    */
   public int getDamage(){
     return damage;
   }
+  /**
+   * sets xCoord to newX
+   * @param newX new x cord
+   */
   public void setX(int x){
     xCoord = x;
   }
+  /**
+   * sets yCoord to newY
+   * @param newY new r cord
+   */
   public void setY(int y){
     yCoord = y;
   }

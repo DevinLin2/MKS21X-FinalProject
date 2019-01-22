@@ -39,7 +39,7 @@ public class Field{
     floor = new ArrayList<Floor>();
     playerBullets = new ArrayList<Projectile>();
     Floor levelOne = new Floor(1);
-    // evverytime a monster is hit it takes 1000 damage. keep that in mind when setting its health
+    // everytime a monster is hit it takes 1000 damage. keep that in mind when setting its health
     // level one monsters
     levelOne.addMonster(2500,30,6,1,2);
     levelOne.addMonster(2500,50,10,1,2);
@@ -52,17 +52,17 @@ public class Field{
       Scanner in = new Scanner(f);
       while(in.hasNext()){
         String line = in.nextLine();
-        String[] arguments = line.split(",");
-        levelOne.addWall(Integer.parseInt(arguments[0]), Integer.parseInt(arguments[1]));
+        String[] lvlOneWallCord = line.split(",");
+        levelOne.addWall(Integer.parseInt(lvlOneWallCord[0]), Integer.parseInt(lvlOneWallCord[1]));
       }
     }
     catch(FileNotFoundException e){
       e.printStackTrace();
     }
     floor.add(levelOne);
-    currentFloor = levelOne;
+    currentFloor = levelOne; //used to set walls of the correct floor
   }
-  public void changeLevel(int lvlNum){
+  public void changeLevel(int lvlNum){ // used to set current floor
     if (lvlNum == 1){
       currentFloor = floor.get(0);
     }
@@ -77,7 +77,7 @@ public class Field{
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.setCursorVisible(false);
     boolean running = true;
-    Player bob = new Player(85, 10, 10, 1);
+    Player bob = new Player(85, 10, 10, 1); // health at 85 which translates to the char 'U'
     Screen screen = new Screen(terminal);
     Field playingField = new Field();
     String[] directionArray = new String[]{"up", "down", "left", "right"};
@@ -93,39 +93,37 @@ public class Field{
         terminal.putCharacter(current.getBorder().get(currentWall).getLogo());
       }
     }
-    portal exit = new portal(69,6); // 69 6
+    portal exit = new portal(69,6);
     while (running) {
-      if (mode.equals("playing")) {
-        if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){
+      if (mode.equals("playing")) { // code runs when player is alive therefore "playing"
+        if (exit.getX() == bob.getX() && exit.getY() == bob.getY()){ // player standing on portal wont glitch
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
         }
-        else{
+        else{ // puts player and portal on screen
           terminal.moveCursor(bob.getX(),bob.getY());
           terminal.putCharacter(bob.getCharacter());
           terminal.moveCursor(exit.getX(),exit.getY());
           terminal.putCharacter(exit.getLogo());
         }
         Key key = terminal.readInput();
-        //screen.putString(1,1,"Health: " + bob.getHealth(), Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         // following code responsible for monster movement,shooting, and damaging Player
         for (int monster = 0; monster < playingField.currentFloor.getEnemies().size(); monster++){
           Monster currentMonster = playingField.currentFloor.getEnemies().get(monster);
           int randIndex = Math.abs(randgen.nextInt(4));
-          if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 10000 == 0)) {
+          if ((currentMonster.validMove(directionArray[randIndex], playingField.floor, playingField.currentFloor)) && (currentMonster.getCount() % 10000 == 0)) { // 10000 is the buffer time increase it and monster will move slowerdecrease it and monster will move faster
             terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
-            terminal.putCharacter(' ');
             currentMonster.move(directionArray[randIndex]);
             terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
             terminal.putCharacter(currentMonster.getCharacter());
             // player Damage
             if (((bob.getX() <= currentMonster.getX()+currentMonster.getRange()) && (bob.getX() >= currentMonster.getX()-currentMonster.getRange())) && ((bob.getY() <= currentMonster.getY()+currentMonster.getRange()) && (bob.getY() >= currentMonster.getY()-currentMonster.getRange()))) {
               bob.takeDamage(currentMonster.getDamage());
-              if (bob.getHealth() <= 64){
+              if (bob.getHealth() <= 64){ // 64 is set because the char 'A' int value is 65. our rule is that if player goes below the letter A they die
                 mode = "lose";
               }
             }
-            currentMonster.resetCount();
+            currentMonster.resetCount(); // monster moved; reset count to not make it go over int cap of 2^31-1 if program is left on too long
           }
           // monster take damage
           for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
@@ -136,17 +134,17 @@ public class Field{
               if (currentMonster.getHealth() <= 0){
                 terminal.moveCursor(currentMonster.getX(), currentMonster.getY());
                 terminal.putCharacter(' ');
-                playingField.currentFloor.removeMonster(currentMonster);
+                playingField.currentFloor.removeMonster(currentMonster); // used to check if all monsters are killed
               }
             }
           }
-          currentMonster.addToCount();
+          currentMonster.addToCount(); //adds to count as a way to buffer monster movement
         }
         // player bullet travel
         for (int bullet = 0; bullet < playingField.playerBullets.size(); bullet++){
           Projectile currentBullet = playingField.playerBullets.get(bullet);
           currentBullet.addToCount();
-          if (currentBullet.getCount() % 1000 == 0){
+          if (currentBullet.getCount() % 1000 == 0){ // 1000 is the buffer for bullet movement. the higher the buffer, the slower the bullet and vice versa.
             if (currentBullet.validMove(currentBullet.getDirection(), playingField.floor, playingField.currentFloor)) {
               if (currentBullet.getX() != bob.getX() || currentBullet.getY() != bob.getY()){
                 terminal.moveCursor(currentBullet.getX(), currentBullet.getY());
@@ -205,17 +203,18 @@ public class Field{
             terminal.putCharacter(bob.getCharacter());
             lastKey = "right";
           }
-          if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()) {
-            if(playingField.currentFloor.getEnemies().size() == 0){
+          // player portal to new floor
+          if(key.getCharacter() == 'p' && bob.getX() == exit.getX() && bob.getY() == exit.getY()) { // makes sure player is standing on the portal
+            if(playingField.currentFloor.getEnemies().size() == 0){ // player killed all enemies
               if (playingField.currentFloor.getLevel() == 1){
                 Floor levelTwo = new Floor(2);
-                try{
+                try{ // reads in text file to make a floor
                   File f = new File("LevelTwo.txt");
                   Scanner in = new Scanner(f);
                   while(in.hasNext()){
                     String line = in.nextLine();
-                    String[] argss = line.split(",");
-                    levelTwo.addWall(Integer.parseInt(argss[0]), Integer.parseInt(argss[1]));
+                    String[] lvlTwoWallCord = line.split(",");
+                    levelTwo.addWall(Integer.parseInt(lvlTwoWallCord[0]), Integer.parseInt(lvlTwoWallCord[1]));
                   }
                 }
                 catch(FileNotFoundException e){
@@ -224,28 +223,30 @@ public class Field{
                 playingField.floor.add(levelTwo);
                 lastKey = "p";
                 playingField.changeLevel(2);
-                for(int c = 0; c < 81; c ++){
+                for(int c = 0; c < 81; c ++){ // clears screen for new walls
                   for(int r = 0; r < 25; r ++){
                     terminal.moveCursor(c,r);
                     terminal.putCharacter(' ');
                   }
                 }
-                for (int currentWalll = 0; currentWalll < playingField.floor.get(1).getBorder().size(); currentWalll ++){
-                  terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentWalll).getX(), playingField.floor.get(1).getBorder().get(currentWalll).getY());
+                // adds floor two walls
+                for (int currentwall = 0; currentwall < playingField.floor.get(1).getBorder().size(); currentwall ++){
+                  terminal.moveCursor(playingField.floor.get(1).getBorder().get(currentwall).getX(), playingField.floor.get(1).getBorder().get(currentwall).getY());
                   terminal.putCharacter('\u25fb');
                 }
                 terminal.moveCursor(bob.getX(),bob.getY());
                 terminal.putCharacter(' ');
                 bob.setX(4);
-                bob.setY(20);
+                bob.setY(20); // repositions player to valid location
                 terminal.moveCursor(bob.getX(),bob.getY());
                 terminal.putCharacter('\u0040');
                 terminal.moveCursor(exit.getX(), exit.getY());
                 terminal.putCharacter(' ');
                 exit.setX(78);
-                exit.setY(7);
+                exit.setY(7); // repositions portal to valid location
                 terminal.moveCursor(exit.getX(),exit.getY());
                 terminal.putCharacter('\u06DE');
+                // adds level two monsters to ArrayList of enemies
                 levelTwo.addMonster(2500,18,7,1,2);
                 levelTwo.addMonster(2500,14,4,1,2);
                 levelTwo.addMonster(2500,40,4,1,3);
@@ -263,13 +264,13 @@ public class Field{
               }
               else{
                 Floor levelThree = new Floor(3);
-                try{
+                try{ // reads text file for level 3
                   File ff = new File("LevelThree.txt");
                   Scanner in = new Scanner(ff);
                   while(in.hasNext()){
                     String line = in.nextLine();
-                    String[] argsss = line.split(",");
-                    levelThree.addWall(Integer.parseInt(argsss[0]), Integer.parseInt(argsss[1]));
+                    String[] lvlThreeWallCord = line.split(",");
+                    levelThree.addWall(Integer.parseInt(lvlThreeWallCord[0]), Integer.parseInt(lvlThreeWallCord[1]));
                   }
                 }
                 catch(FileNotFoundException e){
@@ -277,28 +278,30 @@ public class Field{
                 }
                 playingField.floor.add(levelThree);
                 playingField.changeLevel(3);
-                for(int c = 0; c < 81; c ++){
+                for(int c = 0; c < 81; c ++){ // clears screen
                   for(int r = 0; r < 25; r ++){
                     terminal.moveCursor(c,r);
                     terminal.putCharacter(' ');
                   }
                 }
-                for (int currentWalll = 0; currentWalll < playingField.floor.get(2).getBorder().size(); currentWalll ++){
-                  terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentWalll).getX(), playingField.floor.get(2).getBorder().get(currentWalll).getY());
+                // adds lv 3 walls
+                for (int currentwall = 0; currentwall < playingField.floor.get(2).getBorder().size(); currentwall ++){
+                  terminal.moveCursor(playingField.floor.get(2).getBorder().get(currentwall).getX(), playingField.floor.get(2).getBorder().get(currentwall).getY());
                   terminal.putCharacter('\u25fb');
                 }
                 terminal.moveCursor(bob.getX(),bob.getY());
                 terminal.putCharacter(' ');
                 bob.setX(4);
-                bob.setY(20);
+                bob.setY(20); // repositions player
                 terminal.moveCursor(bob.getX(),bob.getY());
                 terminal.putCharacter('\u0040');
                 terminal.moveCursor(exit.getX(), exit.getY());
                 terminal.putCharacter(' ');
                 exit.setX(58);
-                exit.setY(13);
+                exit.setY(13); // repositions portal
                 terminal.moveCursor(exit.getX(),exit.getY());
                 terminal.putCharacter('\u06DE');
+                // adds level 3 monsters to ArrayList of enemies
                 levelThree.addMonster(2500,18,5,1,3);
                 levelThree.addMonster(2500,24,8,1,2);
                 levelThree.addMonster(2500,53,3,1,2);
@@ -314,39 +317,45 @@ public class Field{
                 levelThree.addMonster(2500,50,8,1,2);
                 levelThree.addMonster(2500,30,14,1,2);
                 levelThree.addMonster(2500,39,13,1,3);
-                levelThree.addMonster(20000,38,12,1,6);
+                /*
+                this is the boss
+                it needs to be hit 30 times by bullets to die
+                it has an extra long range
+                */
+                levelThree.addMonster(30000,38,12,1,6);
               }
             }
             if (playingField.currentFloor.getLevel() == 3 && playingField.currentFloor.getEnemies().size() == 0) {
+              // if player presses p on final portal and they killed all monsters, they will have won
               mode = "win";
             }
           }
           // player attack
-          if (key.getCharacter() == 'w'){
+          if (key.getCharacter() == 'w'){ // shoots projectile up
             Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "up");
             playingField.playerBullets.add(bullet);
           }
-          if (key.getCharacter() == 'a'){
+          if (key.getCharacter() == 'a'){// shoots projectile left
             Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "left");
             playingField.playerBullets.add(bullet);
           }
-          if (key.getCharacter() == 's'){
+          if (key.getCharacter() == 's'){// shoots projectile down
             Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "down");
             playingField.playerBullets.add(bullet);
           }
-          if (key.getCharacter() == 'd'){
+          if (key.getCharacter() == 'd'){// shoots projectile right
             Projectile bullet = new Projectile(bob.getX(), bob.getY(), bob.getDamage(), "right");
             playingField.playerBullets.add(bullet);
           }
           screen.refresh();
         }
       }
-      if (mode.equals("win")) {
+      if (mode.equals("win")) { // player has won the game! Congrats. the game exits on its own.
         screen.stopScreen();
         running = false;
         System.out.println("YOU WIN!!!!!!!!!!!!!!!!!!!");
       }
-      if (mode.equals("lose")) {
+      if (mode.equals("lose")) { // the player has lost! try again! the game exits on its own.
         screen.stopScreen();
         running = false;
         System.out.println("YOU LOSE :(");
@@ -354,3 +363,6 @@ public class Field{
     }
   }
 }
+/*
+if you are reading this I hope u have a beautiful day :)))))))))))))))
+*/
